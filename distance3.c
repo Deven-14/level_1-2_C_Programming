@@ -25,8 +25,8 @@ void output(Store p1,Store p2,float d)
 }
 int main()
 {    
-    store s1,s2;
-    float d,x1,y1,x2,y2;
+    Store s1,s2;
+    float d;
     s1=input();
     s2=input();
     d=process(s1,s2);
