@@ -14,15 +14,14 @@ typedef struct sum Sum;
 int input()
 {
     int n;
-    print("Enter the number of fractions\n");
+    printf("Enter the number of fractions\n");
     scanf("%d",&n);
     return n;
 }
 void frac_input(int n,Frac p[n])
 {
     int i;
-    Frac p;
-    printf("Enter the numerator and denominator of a number (n/d):\n");
+    printf("Enter the fractions (n/d):\n");
     for(i=0;i<n;i++)
         scanf("%d/%d",&p[i].n,&p[i].d);
 }
@@ -32,7 +31,7 @@ Sum process(int n,Frac f[n])
     Sum s;
     s.sn=f[0].n;
     s.sd=f[0].d;
-    for(i=0;i<n;i++)
+    for(i=1;i<n;i++)
     {
         s.sn=(s.sn*f[i].d)+(s.sd*f[i].n);
         s.sd=s.sd*f[i].d;
@@ -53,8 +52,8 @@ int main()
     n=input();
     Frac f[n];
     Sum s;
-    frac_input(n,Frac f);
-    s=process(n,Frac f);
-    output(n,Frac f,sum s);
+    frac_input(n,f);
+    s=process(n,f);
+    output(n,f,s);
     return 0;
 }
