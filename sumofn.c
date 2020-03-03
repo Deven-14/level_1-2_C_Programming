@@ -13,7 +13,7 @@ void array_input(int n,int a[n])
     for(i=0;i<n;i++)
         scanf("%d",&a[i]);
 }
-int process(intn,int a[n])
+int process(int n,int a[n])
 {
     int i,sum=0;
     for(i=0;i<n;i++)
@@ -26,15 +26,15 @@ void output(int n,int a[n],int sum)
     printf("The sum of ");
     for(i=0;i<n-1;i++)
         printf("%d+",a[i]);
-    printf("%d=%d",a[i],sum);
+    printf("%d=%d\n",a[i],sum);
 }
 int main()
 {
     int n,sum;
     n=input();
     int a[n];
-    array_input(n,a[n]);
-    sum=process(n,a[n]);
-    output(n,a[n],sum);
+    array_input(n,a);
+    sum=process(n,a);
+    output(n,a,sum);
     return 0;
 }
