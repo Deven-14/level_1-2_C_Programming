@@ -8,7 +8,7 @@ typedef struct frac Frac;
 Frac input()
 {
     Frac p;
-    printf("Enter the numerator and denominator of a number (n/d):\n");
+    printf("Enter a fraction (n/d):\n");
     scanf("%d/%d",&p.n,&p.d);
     return p;
 }
@@ -19,33 +19,33 @@ Frac process(Frac p1,Frac p2)
     p3.d=p1.d*p2.d;
     return p3;
 }
-Frac gcd(Frac f)
+int gcd(Frac f)
 {
-    int t;
-    Frac p;
-    p.n=f.n;
-    p.d=f.d;
-    while(p.d>0)
+    int a,b,t;
+    a=f.n;
+    b=f.d;
+    while(b>0)
     {
-        t=p.d;
-        p.d=p.n%p.d;
-        p.n=t;
+        t=b;
+        b=a%b;
+        a=t;
     }
-    return p;
+    return a;
 }
-void output(Frac p1,Frac p2,Frac p3,Frac g)
+void output(Frac p1,Frac p2,Frac p3,int g)
 {   
-    int n=p3.n/g.n;
-    int d=p3.d/g.n;  // can be g.n or g.d 
-    printf("The sum of %d/%d + %d/%d = %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,p3.n,p3.d,g.n,g.d);
+    int n=p3.n/g;
+    int d=p3.d/g; 
+    printf("The sum of %d/%d + %d/%d = %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,p3.n,p3.d,n,d);
 }
 int main()
 {
-    Frac p1,p2,p3,g;
+    int g;
+    Frac p1,p2,p3;
     p1=input();
     p2=input();
     p3=process(p1,p2);
-    output(p1,p2,p3);
     g=gcd(p3);
+    output(p1,p2,p3,g);
     return 0;
 }
