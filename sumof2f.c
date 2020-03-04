@@ -32,20 +32,26 @@ int gcd(Frac f)
     }
     return a;
 }
-void output(Frac p1,Frac p2,Frac p3,int g)
+Frac final_n_d(Frac s,int g)
+{
+	Frac a;
+	a.n=s.n/g;
+	a.d=s.d/g;
+	return a;
+}
+void output(Frac p1,Frac p2,Frac p3,Frac sf)
 {   
-    int n=p3.n/g;
-    int d=p3.d/g; 
-    printf("The sum of %d/%d + %d/%d = %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,p3.n,p3.d,n,d);
+    printf("The sum of %d/%d + %d/%d = %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,p3.n,p3.d,sf.n,sf.d);
 }
 int main()
 {
     int g;
-    Frac p1,p2,p3;
+    Frac p1,p2,p3,sf;
     p1=input();
     p2=input();
     p3=process(p1,p2);
     g=gcd(p3);
-    output(p1,p2,p3,g);
+    sf=final_n_d(p3,g);
+    output(p1,p2,p3,sf);
     return 0;
 }
