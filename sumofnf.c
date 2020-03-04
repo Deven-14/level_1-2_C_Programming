@@ -53,13 +53,13 @@ int gcd(Sum s)
 }
 void output(int n, Frac f[n],Sum s,int g)
 {
-	int n=s.sn/g;
-	int d=s.sd/g;
+	int n1=s.sn/g;
+	int d1=s.sd/g;
 	int i;
 	printf("The sum of ");
 	for(i=0;i<n-1;i++)
 		printf("%d/%d + ",f[i].n,f[i].d);
-	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.sn,s.sd,n,d);
+	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.sn,s.sd,n1,d1);
 }
 int main()
 {
