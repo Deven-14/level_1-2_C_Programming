@@ -38,54 +38,38 @@ Sum process(int n,Frac f[n])
 	}
 	return s;
 }
-/*
-Sum gcd()      //do not pass 'Sum s' as an argument because then it'll be call by reference
-{
-	Sum p;      //this acts as pass by value and we can store the return value in another variable of the structure
-	int t;  //p should'nt have any value?y is it working
-	while(p.sd>0)
+int gcd(Sum s) 
+{	    
+	int a,b,t;
+	a=s.sn;
+	b=s.sd;
+	while(b>0)
 	{
-		t=p.sd;
-		p.sd=p.sn%p.sd;
-		p.sn=t;
+		t=b;
+		b=a%b;
+		a=t;
 	}
-	return p;
+	return a;
 }
- */
-int gcd(Sum s)
+void output(int n, Frac f[n],Sum s,int g)
 {
-	int i,gcd;
-	for(i = 1; i <= s.sn && i <= s.sd; i++)
-	{
-		if(s.sn % i == 0 && s.sd % i == 0)
-			gcd = i;
-	}
-	return gcd;
-}
-void output(int n, Frac f[n],Sum s,int g)   //,Sum s_gcd
-{
-	/*
-	int sofn=s.sn/s_gcd.sn;
-	int sofd=s.sd/s_gcd.sn;   //it has to be s_gcd.sn itself, as we are dividing the numerator and denominator with the gcd which is stored in s_gcd.sn
-	 */
-	
-	int sofn=s.sn/g;
-	int sofd=s.sd/g;
+	int n=s.sn/g;
+	int d=s.sd/g;
 	int i;
 	printf("The sum of ");
 	for(i=0;i<n-1;i++)
 		printf("%d/%d + ",f[i].n,f[i].d);
-	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.sn,s.sd,sofn,sofd);
+	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.sn,s.sd,n,d);
 }
 int main()
 {
 	int n,g;
 	n=input();
 	Frac f[n];
-	Sum s;     //,s_gcd
+	Sum s;     
 	frac_input(n,f);
 	s=process(n,f);
-	g=gcd(s);              //s_gcd=gcd();
-	output(n,f,s,g);    //,s_gcd
+	g=gcd(s);            
+	output(n,f,s,g);    
 	return 0;
 }
