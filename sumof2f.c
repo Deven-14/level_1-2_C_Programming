@@ -19,9 +19,8 @@ Frac process(Frac p1,Frac p2)
     p3.d=p1.d*p2.d;
     return p3;
 }
-Frac reduce(Frac s)
-{
-    Frac f;
+int gcd(Frac s) 
+{	    
     int a,b,t;
     a=s.n;
     b=s.d;
@@ -31,9 +30,16 @@ Frac reduce(Frac s)
         b=a%b;
         a=t;
     }
-	f.n=s.n/a;
-	f.d=s.d/a;
-	return f;
+    return a;
+}
+Frac reduce(Frac s)
+{
+    int g;
+    Frac f;
+    g=gcd(s);
+    f.n=s.n/g;
+    f.d=s.d/g;
+    return f;
 }
 void output(Frac p1,Frac p2,Frac p3,Frac sf)
 {   
