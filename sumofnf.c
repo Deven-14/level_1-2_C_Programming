@@ -45,24 +45,30 @@ int gcd(Frac s)
 	}
 	return a;
 }
-void output(int n, Frac f[n],Frac s,int g)
+Frac final_n_d(Frac s,int g)
 {
-	int n1=s.n/g;
-	int d1=s.d/g;
+	Frac a;
+	a.n=s.n/g;
+	a.d=s.d/g;
+	return a;
+}
+void output(int n, Frac f[n],Frac s,Frac sf)
+{
 	int i;
 	printf("The sum of ");
 	for(i=0;i<n-1;i++)
 		printf("%d/%d + ",f[i].n,f[i].d);
-	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.n,s.d,n1,d1);
+	printf("%d/%d = %d/%d = %d/%d\n",f[i].n,f[i].d,s.n,s.d,sf.n,sf.d);
 }
 int main()
 {
 	int n,g;
 	n=input();
-	Frac f[n],s;    
+	Frac f[n],s,sf;    
 	frac_input(n,f);
 	s=process(n,f);
-	g=gcd(s);            
-	output(n,f,s,g);    
+	g=gcd(s); 
+	sf=final_n_d(s,g);
+	output(n,f,s,sf);    
 	return 0;
 }
