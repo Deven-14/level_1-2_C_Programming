@@ -41,17 +41,18 @@ Frac reduce(Frac s)
     f.d=s.d/g;
     return f;
 }
-void output(Frac p1,Frac p2,Frac p3,Frac sf)
+void output(Frac p1,Frac p2,Frac p3)
 {   
+	Frac sf;
+    sf=reduce(p3);
     printf("The sum of %d/%d + %d/%d = %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,p3.n,p3.d,sf.n,sf.d);
 }
 int main()
 {
-    Frac p1,p2,p3,sf;
+    Frac p1,p2,p3;
     p1=input();
     p2=input();
     p3=process(p1,p2);
-    sf=reduce(p3);
-    output(p1,p2,p3,sf);
+    output(p1,p2,p3);
     return 0;
 }
