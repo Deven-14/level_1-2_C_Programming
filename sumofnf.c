@@ -45,9 +45,11 @@ int gcd(Frac s)
 	}
 	return a;
 }
-Frac final_n_d(Frac s,int g)
+Frac reduce(Frac s)
 {
+	int g;
 	Frac a;
+	g=gcd(s);
 	a.n=s.n/g;
 	a.d=s.d/g;
 	return a;
@@ -62,13 +64,12 @@ void output(int n, Frac f[n],Frac s,Frac sf)
 }
 int main()
 {
-	int n,g;
+	int n;
 	n=input();
 	Frac f[n],s,sf;    
 	frac_input(n,f);
 	s=process(n,f);
-	g=gcd(s); 
-	sf=final_n_d(s,g);
+	sf=reduce(s);
 	output(n,f,s,sf);    
 	return 0;
 }
