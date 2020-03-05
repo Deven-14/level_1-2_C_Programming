@@ -19,11 +19,9 @@ void frac_input(int n,Frac p[n])
 	for(i=0;i<n;i++)
 		scanf("%d/%d",&p[i].n,&p[i].d);
 }
-int gcd(Frac s) 
+int gcd(int a,int b) 
 {	    
-	int a,b,t;
-	a=s.n;
-	b=s.d;
+	int t;
 	while(b>0)
 	{
 		t=b;
@@ -36,7 +34,7 @@ Frac reduce(Frac s)
 {
 	int g;
 	Frac a;
-	g=gcd(s);
+	g=gcd(s.n,s.d); //because gcd is the greatest common divisor of 2 numbers and so don't pass a structure,instead pass the values of that structure
 	a.n=s.n/g;
 	a.d=s.d/g;
 	return a;
