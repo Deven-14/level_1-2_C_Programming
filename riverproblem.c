@@ -22,42 +22,37 @@ struct bridge_crossing
     int b5;
 };
 typedef struct bridge_crossing Bridge;
-struct Store
+void firstpairs(Ivalues a[4],int i,Pairs p1[6])
 {
-	int a;
-};
-typedef struct Store STORE;
-void firstpairs(Ivalues a[4],int i,Pairs a1[6])
-{
-	a1[0].a=a[i].a;
-	a1[0].a=a[i].b;
-	a1[1].a=a[i].a;
-	a1[1].a=a[i].c;
-	a1[2].a=a[i].a;
-	a1[2].a=a[i].d;
-	a1[3].a=a[i].b;
-	a1[3].a=a[i].c;
-	a1[4].a=a[i].b;
-	a1[4].a=a[i].d;
-	a1[5].a=a[i].a;
-	a1[5].a=a[i].b;
+	p1[0].a=a[i].a;
+	p1[0].a=a[i].b;
+	p1[1].a=a[i].a;
+	p1[1].a=a[i].c;
+	p1[2].a=a[i].a;
+	p1[2].a=a[i].d;
+	p1[3].a=a[i].b;
+	p1[3].a=a[i].c;
+	p1[4].a=a[i].b;
+	p1[4].a=a[i].d;
+	p1[5].a=a[i].a;
+	p1[5].a=a[i].b;
 }
-void thirdpairs(Ivalues a[4],int l,Pairs a3[3])
+void thirdpairs(Ivalues a[4],int l,Pairs p3[3])
 {
-	a3[0].a=a[l].a;
-	a3[0].b=a[l].c;
-	a3[1].a=a[l].a;
-	a3[1].b=a[l].d;
-	a3[2].a=a[l].c;
-	a3[2].b=a[l].d;
+	p3[0].a=a[l].a;
+	p3[0].b=a[l].c;
+	p3[1].a=a[l].a;
+	p3[1].b=a[l].d;
+	p3[2].a=a[l].c;
+	p3[2].b=a[l].d;
 }
-int input1()
+int input()
 {
     int n;
     scanf("%d",&n);
     return n;
 }
-Ivalues input2()
+Ivalues input_values()
 {
     Ivalues i;
     scanf("%d%d%d%d",&i.a,&i.b,&i.c,&i.d);
@@ -68,13 +63,11 @@ int add(Bridge b)
 	int sum=b.b1+b.b2+b.b3+b.b4+b.b4+b.b5;
 	return sum;
 }
-STORE store(int sum,int i,int n)
+void store(int n,int a[n],int sum,int i)    // didn't understand y int n has to be put
 {
-	STORE a[n];
 	a[i]=sum;
-	return a;
 }
-int check_smallest(STORE a[n],int n)
+int check_smallest(int n,int a[n])  //y is it necessary to put int n before int a[n]
 {
 	int i,s,t;
 	for(i=0;i<n;i++)
@@ -91,33 +84,33 @@ int check_smallest(STORE a[n],int n)
 	}
 	return s;
 }
-int process(int n,Ivalues a[n],Pairs a1[6],Pairs a3[3],Bridge b,STORE a[n])
+int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
 {
-    int i,j,k,l,sum,s;
+    int i,j,k,l,sum,shortest,d[n];
     for(i=0;i<n;i++)
     {
-        a[i]=input2();
-        firstpairs(a,i);
+        a[i]=input_values();
+        firstpairs(a,i,p1);
         for(j=0;j<6;j++)
         {
-			b.b1=a1[j].b;
-			b.b2=a1[j].a;    // because the larger time taking 
+			b.b1=p1[j].b;
+			b.b2=p1[j].a;    // because the larger time taking
 			for(k=0;k<6;k++)
 			{
-				thirdpairs(a,k);
+				thirdpairs(a,k,p3);
 				for(l=0;l<3;l++)
 				{
-					b.b3=a3[l].b;
-					b.b4=a3[l].a;
+					b.b3=p3[l].b;
+					b.b4=p3[l].a;
 					b.b5=a[i].d;
 					sum=add(b);
-					store(sum,i,n);
+					store(n,d,sum,i);
 				}
 			}
 		}
 	}
-	s=check_smallest(a,n);	
-	return s;	
+	shortest=check_smallest(n,d);
+	return shortest;
 }
 void output(int s)
 {
@@ -125,13 +118,12 @@ void output(int s)
 }
 int main()
 {
-    int n;
-    n=input1();
+    int n,s;
+    n=input();
     Ivalues i[n];
-    Pairs a1[6],a3[3];
+    Pairs p1[6],p3[3];
     Bridge b;
-    STORE a[n];
-    process(n,i,a1,a3,b,a);
+    s=process(n,i,p1,p3,b);
     output(s);
     return 0;
 }
