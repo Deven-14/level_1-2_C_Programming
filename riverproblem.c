@@ -119,7 +119,7 @@ int find_t5(int n, int i, Bridge b, Ivalues a[n])
 }
 int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
 {
-    int i,j,l,e,m=0,sum,shortest,d[100];
+    int i,j,l,m=0,sum,shortest,d[100];
     for(i=0;i<n;i++)
     {
         a[i]=input_values();
@@ -132,7 +132,7 @@ int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
             {
                 thirdpairs(n,a,i,j,p3);
                 b.b3=p3[l].b;
-                b.b4=p3[l].a;
+                b.b4=(b.b1<=b.b2)?((b.b1<=b.b3)?b.b1:b.b3):((b.b2<=b.b3)?b.b2:b.b3);
                 b.b5=find_t5(n,i,b,a);
                 sum=add(b.b1,b.b2,b.b3,b.b4,b.b5);
                 store(d,sum,m);
