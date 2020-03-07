@@ -124,7 +124,7 @@ int find_t5(int n, int i,int l, Bridge b, Ivalues a[n],Pairs p3[3])
 }
 void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
 {
-    int i,j,l,m=0,sum,shortest,d[100],e[n];
+    int i,j,l,m=0,sum,shortest,d[100];
     for(i=0;i<n;i++)
     {
         a[i]=input_values();
@@ -152,11 +152,11 @@ void output(int n,int e[n])
 {
     int i;
     for(i=0;i<n;i++)
-        printf("%d",e[i]);
+        printf("%d ",e[i]);
 }
 int main()
 {
-    int n,s;
+    int n;
     n=input();
     int e[n];
     Ivalues i[n];
