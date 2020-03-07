@@ -132,7 +132,7 @@ int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
             {
                 thirdpairs(n,a,i,j,p3);
                 b.b3=p3[l].b;
-                b.b4=(b.b1<=b.b2)?((b.b1<=b.b3)?b.b1:b.b3):((b.b2<=b.b3)?b.b2:b.b3);
+                b.b4=(p3[l].b<=p3[l].a)?((p3[l].b<=b.b1)?p3[l].b:b.b1):((p3[l].a<=b.b1)?p3[l].a:b.b1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
                 b.b5=find_t5(n,i,b,a);
                 sum=add(b.b1,b.b2,b.b3,b.b4,b.b5);
                 store(d,sum,m);
