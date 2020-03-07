@@ -105,21 +105,26 @@ int check_shortest(int m,int a[100])  //y is it necessary to put int n before in
 	}
 	return s;
 }
-int find_t5(int n, int i, Bridge b, Ivalues a[n])
+int find_t5(int n, int i,int l, Bridge b, Ivalues a[n],Pairs p3[3])
 {
-  if(a[i].a!=b.b1 && a[i].a!=b.b2 && a[i].a!=b.b3 && a[i].a!=b.b4)
-  b.b5=a[i].a;
-  else if(a[i].b!=b.b1 && a[i].b!=b.b2 && a[i].b!=b.b3 && a[i].b!=b.b4)
-  b.b5=a[i].b;
-  else if(a[i].c!=b.b1 && a[i].c!=b.b2 && a[i].c!=b.b3 && a[i].c!=b.b4)
-  b.b5=a[i].c;
+    int c;
+  if(a[i].a!=b.b1 && a[i].a!=p3[l].a && a[i].a!=p3[l].b )
+  c=a[i].a;
+  else if(a[i].b!=b.b1 && a[i].b!=p3[l].a && a[i].b!=p3[l].b )
+  c=a[i].b;
+  else if(a[i].c!=b.b1 && a[i].c!=p3[l].a && a[i].c!=p3[l].b )
+  c=a[i].c;
   else
-  b.b5=a[i].d;
+  c=a[i].d;
+  if(c>b.b4)
+    b.b5=c;
+  else
+    b.b5=b.b4;
   return b.b5;
 }
-int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
+void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
 {
-    int i,j,l,m=0,sum,shortest,d[100];
+    int i,j,l,m=0,sum,shortest,d[100],e[n];
     for(i=0;i<n;i++)
     {
         a[i]=input_values();
@@ -133,28 +138,31 @@ int process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b)
                 thirdpairs(n,a,i,j,p3);
                 b.b3=p3[l].b;
                 b.b4=(p3[l].b<=p3[l].a)?((p3[l].b<=b.b1)?p3[l].b:b.b1):((p3[l].a<=b.b1)?p3[l].a:b.b1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-                b.b5=find_t5(n,i,b,a);
+                b.b5=find_t5(n,i,l,b,a,p3);
                 sum=add(b.b1,b.b2,b.b3,b.b4,b.b5);
                 store(d,sum,m);
                 m++;
             }
         }
+        shortest=check_shortest(m,d);
+        e[i]=shortest;
    	}
-	shortest=check_shortest(m,d);
-	return shortest;
 }
-void output(int s)
+void output(int n,int e[n])
 {
-	printf("%d",s);
+    int i;
+    for(i=0;i<n;i++)
+        printf("%d",e[i]);
 }
 int main()
 {
     int n,s;
     n=input();
+    int e[n];
     Ivalues i[n];
     Pairs p1[6],p3[3];
     Bridge b;
-    s=process(n,i,p1,p3,b);
-    output(s);
+    process(n,i,p1,p3,b,e);
+    output(n,e);
     return 0;
 }
