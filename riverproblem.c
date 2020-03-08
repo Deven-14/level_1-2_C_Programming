@@ -117,18 +117,12 @@ int find_t5(int n, int i,int l,int j, Bridge b, Ivalues a[n])
 }
 int check_shortest(int m,int a[100])  //y is it necessary to put int n before int a[n]
 {
-    int i,s,t;
+    int i,s;
+    s=a[0];          //error in my logic why?
     for(i=0;i<m;i++)
     {
-        if(a[i]<a[i+1])
-        {
-            s=a[i];
-            t=a[i+1];
-            a[i+1]=a[i];
-            a[i]=t;
-        }
-        else
-            s=a[i+1];
+        if(a[i]<s)
+        s=a[i];
     }
     return s;
 }
