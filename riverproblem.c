@@ -24,47 +24,47 @@ struct bridge_crossing
 typedef struct bridge_crossing Bridge;
 void firstpairs(int n,Ivalues a[n],int i,Pairs p1[6])
 {
-	p1[0].a=a[i].a;
-	p1[0].b=a[i].b;
-	p1[1].a=a[i].a;
-	p1[1].b=a[i].c;
-	p1[2].a=a[i].a;
-	p1[2].b=a[i].d;
-	p1[3].a=a[i].b;
-	p1[3].b=a[i].c;
-	p1[4].a=a[i].b;
-	p1[4].b=a[i].d;
-	p1[5].a=a[i].c;
-	p1[5].b=a[i].d;
+    p1[0].a=a[i].a;
+    p1[0].b=a[i].b;
+    p1[1].a=a[i].a;
+    p1[1].b=a[i].c;
+    p1[2].a=a[i].a;
+    p1[2].b=a[i].d;
+    p1[3].a=a[i].b;
+    p1[3].b=a[i].c;
+    p1[4].a=a[i].b;
+    p1[4].b=a[i].d;
+    p1[5].a=a[i].c;
+    p1[5].b=a[i].d;
 }
 void thirdpairs(int n,Ivalues a[n],int i,int j,Pairs p3[3])
 {
     if(j==0)
     {
-	p3[0].a=a[i].a;
-	p3[0].b=a[i].c;
-	p3[1].a=a[i].a;
-	p3[1].b=a[i].d;
-	p3[2].a=a[i].c;
-	p3[2].b=a[i].d;
+        p3[0].a=a[i].a;
+        p3[0].b=a[i].c;
+        p3[1].a=a[i].a;
+        p3[1].b=a[i].d;
+        p3[2].a=a[i].c;
+        p3[2].b=a[i].d;
     }
     else if(j==1||j==3)
     {
-	p3[0].a=a[i].a;
-	p3[0].b=a[i].b;
-	p3[1].a=a[i].a;
-	p3[1].b=a[i].d;
-	p3[2].a=a[i].b;
-	p3[2].b=a[i].d;
+        p3[0].a=a[i].a;
+        p3[0].b=a[i].b;
+        p3[1].a=a[i].a;
+        p3[1].b=a[i].d;
+        p3[2].a=a[i].b;
+        p3[2].b=a[i].d;
     }
     else
     {
-	p3[0].a=a[i].a;
-	p3[0].b=a[i].b;
-	p3[1].a=a[i].a;
-	p3[1].b=a[i].c;
-	p3[2].a=a[i].b;
-	p3[2].b=a[i].c;
+        p3[0].a=a[i].a;
+        p3[0].b=a[i].b;
+        p3[1].a=a[i].a;
+        p3[1].b=a[i].c;
+        p3[2].a=a[i].b;
+        p3[2].b=a[i].c;
     }
 }
 int input()
@@ -117,20 +117,20 @@ int find_t5(int n, int i,int l,int j, Bridge b, Ivalues a[n])
 }
 int check_shortest(int m,int a[100])  //y is it necessary to put int n before int a[n]
 {
-	int i,s,t;
-	for(i=0;i<m;i++)
-	{
-		if(a[i]<a[i+1])
-		{
-			s=a[i];
-			t=a[i+1];
-			a[i+1]=a[i];
-			a[i]=t;
-		}
-		else
-		s=a[i+1];
-	}
-	return s;
+    int i,s,t;
+    for(i=0;i<m;i++)
+    {
+        if(a[i]<a[i+1])
+        {
+            s=a[i];
+            t=a[i+1];
+            a[i+1]=a[i];
+            a[i]=t;
+        }
+        else
+            s=a[i+1];
+    }
+    return s;
 }
 void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
 {
@@ -138,14 +138,14 @@ void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
     for(i=0;i<n;i++)
     {
         a[i]=input_values();
+        firstpairs(n,a,i,p1);
         for(j=0;j<6;j++)
         {
-            firstpairs(n,a,i,p1);
             b.b1=p1[j].b;
-            b.b2=p1[j].a;    // because the larger time taking
+            b.b2=p1[j].a;   // because the larger time taking
+            thirdpairs(n,a,i,j,p3);
             for(l=0;l<3;l++)
             {
-                thirdpairs(n,a,i,j,p3);
                 b.b3=p3[l].b;
                 b.b4=(p3[l].b<=p3[l].a)?((p3[l].b<=b.b1)?p3[l].b:b.b1):((p3[l].a<=b.b1)?p3[l].a:b.b1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
                 b.b5=find_t5(n,i,l,j,b,a);
@@ -157,13 +157,13 @@ void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
         shortest=check_shortest(m,d);
         e[i]=shortest;
         m=0; // it's needed because in the next input the loop should start again
-   	}
+    }
 }
 void output(int n,int e[n])
 {
     int i;
     for(i=0;i<n;i++)
-        printf("%d,",e[i]);
+        printf("%d ",e[i]);
 }
 int main()
 {
