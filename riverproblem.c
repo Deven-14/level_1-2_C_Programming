@@ -79,23 +79,6 @@ Ivalues input_values()
     scanf("%d%d%d%d",&i.a,&i.b,&i.c,&i.d);
     return i;
 }
-int check_shortest(int m,int a[100])  //y is it necessary to put int n before int a[n]
-{
-	int i,s,t;
-	for(i=0;i<m;i++)
-	{
-		if(a[i]<a[i+1])
-		{
-			s=a[i];
-			t=a[i+1];
-			a[i+1]=a[i];
-			a[i]=t;
-		}
-		else
-		s=a[i+1];
-	}
-	return s;
-}
 int find_t5(int n, int i,int l,int j, Bridge b, Ivalues a[n])
 {
     int rem;
@@ -131,20 +114,23 @@ int find_t5(int n, int i,int l,int j, Bridge b, Ivalues a[n])
     else
         b.b5=b.b4;
     return b.b5;
-  /*  int c;
-  if(a[i].a!=b.b1 && a[i].a!=p3[l].a && a[i].a!=p3[l].b )
-  c=a[i].a;
-  else if(a[i].b!=b.b1 && a[i].b!=p3[l].a && a[i].b!=p3[l].b )
-  c=a[i].b;
-  else if(a[i].c!=b.b1 && a[i].c!=p3[l].a && a[i].c!=p3[l].b )
-  c=a[i].c;
-  else
-  c=a[i].d;
-  if(c>b.b4)
-    b.b5=c;
-  else
-    b.b5=b.b4;
-  return b.b5;*/
+}
+int check_shortest(int m,int a[100])  //y is it necessary to put int n before int a[n]
+{
+	int i,s,t;
+	for(i=0;i<m;i++)
+	{
+		if(a[i]<a[i+1])
+		{
+			s=a[i];
+			t=a[i+1];
+			a[i+1]=a[i];
+			a[i]=t;
+		}
+		else
+		s=a[i+1];
+	}
+	return s;
 }
 void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
 {
@@ -164,14 +150,13 @@ void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
                 b.b4=(p3[l].b<=p3[l].a)?((p3[l].b<=b.b1)?p3[l].b:b.b1):((p3[l].a<=b.b1)?p3[l].a:b.b1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
                 b.b5=find_t5(n,i,l,j,b,a);
                 sum=b.b1+b.b2+b.b3+b.b4+b.b5;
-                a[m]=sum;
+                d[m]=sum;
                 m++;
             }
         }
         shortest=check_shortest(m,d);
         e[i]=shortest;
         m=0; // it's needed because in the next input the loop should start again
-        printf("%d\n",e[i]);
    	}
 }
 void output(int n,int e[n])
