@@ -79,15 +79,6 @@ Ivalues input_values()
     scanf("%d%d%d%d",&i.a,&i.b,&i.c,&i.d);
     return i;
 }
-int add(int a,int b,int c,int d,int e)
-{
-	int sum=a+b+c+d+e;
-	return sum;
-}
-void store(int a[100],int sum,int m)    // didn't understand y int n has to be put
-{
-	a[m]=sum;
-}
 int check_shortest(int m,int a[100])  //y is it necessary to put int n before int a[n]
 {
 	int i,s,t;
@@ -105,9 +96,42 @@ int check_shortest(int m,int a[100])  //y is it necessary to put int n before in
 	}
 	return s;
 }
-int find_t5(int n, int i,int l, Bridge b, Ivalues a[n],Pairs p3[3])
+int find_t5(int n, int i,int l,int j, Bridge b, Ivalues a[n])
 {
-    int c;
+    int rem;
+    if(j==0)
+    {
+        if(l==0)
+            rem=a[i].d;
+        else if(l==1)
+            rem=a[i].c;
+        else
+            rem=a[i].a;
+    }
+    else if(j==1 || j==3)
+    {
+        if(l==0)
+            rem=a[i].d;
+        else if(l==1)
+            rem=a[i].b;
+        else
+            rem=a[i].a;
+    }
+    else
+    {
+        if(l==0)
+            rem=a[i].c;
+        else if(l==1)
+            rem=a[i].b;
+        else
+            rem=a[i].a;
+    }
+    if(rem>b.b4)
+        b.b5=rem;
+    else
+        b.b5=b.b4;
+    return b.b5;
+  /*  int c;
   if(a[i].a!=b.b1 && a[i].a!=p3[l].a && a[i].a!=p3[l].b )
   c=a[i].a;
   else if(a[i].b!=b.b1 && a[i].b!=p3[l].a && a[i].b!=p3[l].b )
@@ -120,7 +144,7 @@ int find_t5(int n, int i,int l, Bridge b, Ivalues a[n],Pairs p3[3])
     b.b5=c;
   else
     b.b5=b.b4;
-  return b.b5;
+  return b.b5;*/
 }
 void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
 {
@@ -138,21 +162,23 @@ void process(int n,Ivalues a[n],Pairs p1[6],Pairs p3[3],Bridge b,int e[n])
                 thirdpairs(n,a,i,j,p3);
                 b.b3=p3[l].b;
                 b.b4=(p3[l].b<=p3[l].a)?((p3[l].b<=b.b1)?p3[l].b:b.b1):((p3[l].a<=b.b1)?p3[l].a:b.b1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-                b.b5=find_t5(n,i,l,b,a,p3);
-                sum=add(b.b1,b.b2,b.b3,b.b4,b.b5);
-                store(d,sum,m);
+                b.b5=find_t5(n,i,l,j,b,a);
+                sum=b.b1+b.b2+b.b3+b.b4+b.b5;
+                a[m]=sum;
                 m++;
             }
         }
         shortest=check_shortest(m,d);
         e[i]=shortest;
+        m=0; // it's needed because in the next input the loop should start again
+        printf("%d\n",e[i]);
    	}
 }
 void output(int n,int e[n])
 {
     int i;
     for(i=0;i<n;i++)
-        printf("%d ",e[i]);
+        printf("%d,",e[i]);
 }
 int main()
 {
