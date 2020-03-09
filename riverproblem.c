@@ -115,59 +115,60 @@ int time_5thcrossing(int n, int i,int j,int k, Bridge b, Hobbits h[n],Pairs p5)
 		b.time5=p5.b;
 	return b.time5;
 }
-int check_shortest_time(int m,int timevalues_eachloop[100])  //y is it necessary to put int n before int a[n]
+int shortest_time(int i,int l,int n,Hobbits h[n],Pairs p1[6],Pairs p3[3],Pairs p5,Bridge b)
 {
-	int i,shortest_time;
-	shortest_time=timevalues_eachloop[0];          
-	for(i=0;i<m;i++)
+	int j,k,sum,smallest_time,timevalues_eachloop[100];
+	h[i]=input_values();
+	firstpairs(n,h,i,p1);
+	for(j=0;j<6;j++)
 	{
-		if(timevalues_eachloop[i]<shortest_time)
-		shortest_time=timevalues_eachloop[i];
+		b.time1=p1[j].b;
+		b.time2=p1[j].a;   // because the shortest time taking one comes back
+		thirdpairs(n,h,i,j,p3);
+		for(k=0;k<3;k++)
+		{
+			b.time3=p3[k].b;
+			b.time4=(p3[k].b<=p3[k].a)?((p3[k].b<=b.time1)?p3[k].b:b.time1):((p3[k].a<=b.time1)?p3[k].a:b.time1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
+			b.time5=time_5thcrossing(n,i,j,k,b,h,p5);
+			sum=b.time1+b.time2+b.time3+b.time4+b.time5;
+			timevalues_eachloop[l]=sum;
+			l++;
+		}
 	}
-	return shortest_time;
+	smallest_time=timevalues_eachloop[0];          
+	for(i=0;i<l;i++)
+	{
+		if(timevalues_eachloop[i]<smallest_time)
+			smallest_time=timevalues_eachloop[i];
+	}
+	return smallest_time;
 }
-void process(int n,Hobbits h[n],Pairs p1[6],Pairs p3[3],Pairs p5,Bridge b,int shortesttime_eachloop[n])
+void shortest_time_eachloop(int n,Hobbits h[n],Pairs p1[6],Pairs p3[3],Pairs p5,Bridge b,int output_eachloop[n])
 {
-	int i,j,k,l=0,sum,shortest_time,timevalues_eachloop[100];
+	int i,l=0,smallest_time;
 	for(i=0;i<n;i++)
 	{
 		h[i]=input_values();
-		firstpairs(n,h,i,p1);
-		for(j=0;j<6;j++)
-		{
-			b.time1=p1[j].b;
-			b.time2=p1[j].a;   // because the larger time taking
-			thirdpairs(n,h,i,j,p3);
-			for(k=0;k<3;k++)
-			{
-				b.time3=p3[k].b;
-				b.time4=(p3[k].b<=p3[k].a)?((p3[k].b<=b.time1)?p3[k].b:b.time1):((p3[k].a<=b.time1)?p3[k].a:b.time1); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-				b.time5=time_5thcrossing(n,i,j,k,b,h,p5);
-				sum=b.time1+b.time2+b.time3+b.time4+b.time5;
-				timevalues_eachloop[l]=sum;
-				l++;
-			}
-		}
-		shortest_time=check_shortest_time(l,timevalues_eachloop);
-		shortesttime_eachloop[i]=shortest_time;
+		smallest_time=shortest_time(i,l,n,h,p1,p3,p5,b);
+		output_eachloop[i]=smallest_time;
 		l=0; // it's needed because in the next input the loop should start again
-	}
+	}	
 }
-void output(int n,int shortesttime_eachloop[n])
+void output(int n,int output_eachloop[n])
 {
 	int i;
 	for(i=0;i<n;i++)
-		printf("%d ",shortesttime_eachloop[i]);
+		printf("%d ",output_eachloop[i]);
 }
 int main()
 {
 	int n;
 	n=input_numofloops();
-	int shortesttime_eachloop[n];
+	int output_eachloop[n];
 	Hobbits h[n];
 	Pairs p1[6],p3[3],p5;
 	Bridge b;
-	process(n,h,p1,p3,p5,b,shortesttime_eachloop);
-	output(n,shortesttime_eachloop);
+	shortest_time_eachloop(n,h,p1,p3,p5,b,output_eachloop);
+	output(n,output_eachloop);
 	return 0;
 }
