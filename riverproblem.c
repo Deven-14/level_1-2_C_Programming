@@ -99,7 +99,7 @@ int time_5thcrossing(int n, int i,int j,int k,int bridge_crossing[5], int hobbit
 int shortest_time_func(int i,int l,int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5])
 {
 	int j,k,sum,shortest_time,timevalues_eachloop[100];
-	firstpairs(n,h,i,p1);
+	firstpairs(n,hobbit,i,p1);
 	for(j=0;j<6;j++)
 	{
 		bridge_crossing[1]=p1[j].b;
