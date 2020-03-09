@@ -118,7 +118,6 @@ int time_5thcrossing(int n, int i,int j,int k, Bridge b, Hobbits h[n],Pairs p5)
 int shortest_time(int i,int l,int n,Hobbits h[n],Pairs p1[6],Pairs p3[3],Pairs p5,Bridge b)
 {
 	int j,k,sum,smallest_time,timevalues_eachloop[100];
-	h[i]=input_values();
 	firstpairs(n,h,i,p1);
 	for(j=0;j<6;j++)
 	{
