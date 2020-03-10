@@ -60,7 +60,7 @@ void input_values(int hobbit[4])
 {
 	scanf("%d%d%d%d",&hobbit[1],&hobbit[2],&hobbit[3],&hobbit[4]);
 }
-int time_5thcrossing(int n, int i,int j,int k,int bridge_crossing[5], int hobbit[4],Pairs p5)
+Pairs fifthpair(int n, int i,int j,int k,int bridge_crossing[5], int hobbit[4],Pairs p5)
 {
 	p5.b=bridge_crossing[4];
 	if(j==0)
@@ -90,11 +90,7 @@ int time_5thcrossing(int n, int i,int j,int k,int bridge_crossing[5], int hobbit
 		else
 			p5.a=hobbit[1];
 	}
-	if(p5.a>p5.b)
-		bridge_crossing[5]=p5.a;
-	else
-		bridge_crossing[5]=p5.b;
-	return bridge_crossing[5];
+	return p5;
 }
 int shortest_time_func(int i,int l,int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5])
 {
@@ -109,7 +105,11 @@ int shortest_time_func(int i,int l,int n,int hobbit[4],Pairs p1[6],Pairs p3[3],P
 		{
 			bridge_crossing[3]=p3[k].b;
 			bridge_crossing[4]=(p3[k].b<=p3[k].a)?((p3[k].b<=bridge_crossing[1])?p3[k].b:bridge_crossing[1]):((p3[k].a<=bridge_crossing[1])?p3[k].a:bridge_crossing[1]); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-			bridge_crossing[5]=time_5thcrossing(n,i,j,k,bridge_crossing,hobbit,p5);
+			p5=fifthpair(n,i,j,k,bridge_crossing,hobbit,p5);
+			if(p5.a>p5.b)
+				bridge_crossing[5]=p5.a;
+			else
+				bridge_crossing[5]=p5.b;
 			sum=bridge_crossing[1]+bridge_crossing[2]+bridge_crossing[3]+bridge_crossing[4]+bridge_crossing[5];
 			timevalues_eachloop[l]=sum;
 			l++;
@@ -123,7 +123,7 @@ int shortest_time_func(int i,int l,int n,int hobbit[4],Pairs p1[6],Pairs p3[3],P
 	}
 	return shortest_time;
 }
-void shortest_time_eachloop(int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5],int shortesttime_eachloop[n])
+void shortest_time_eachloop_func(int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5],int shortesttime_eachloop[n])
 {
 	int i,l=0,shortest_time;
 	for(i=0;i<n;i++)
@@ -144,11 +144,11 @@ int main()
 {
 	int n;
 	n=input_numofloops();
-	int shortesttime_eachloop[n];
+	int shortest_time_eachloop[n];
 	int hobbit[6];
 	int bridge_crossing[5];
 	Pairs p1[6],p3[3],p5;
-	shortest_time_eachloop(n,hobbit,p1,p3,p5,bridge_crossing,shortesttime_eachloop);
-	output(n,shortesttime_eachloop);
+	shortest_time_eachloop_func(n,hobbit,p1,p3,p5,bridge_crossing,shortest_time_eachloop);
+	output(n,shortest_time_eachloop);
 	return 0;
 }
