@@ -128,7 +128,7 @@ void shortest_time_eachloop_func(int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pai
 	int i,l=0,shortest_time;
 	for(i=0;i<n;i++)
 	{
-		input_values(hobbit);
+		input_values(hobbit); //" wrong because input function should not be called by processing functions"
 		shortest_time=shortest_time_func(i,l,n,hobbit,p1,p3,p5,bridge_crossing);
 		shortesttime_eachloop[i]=shortest_time;
 		l=0; // it's needed because in the next input the loop should start again
