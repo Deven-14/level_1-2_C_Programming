@@ -29,7 +29,7 @@ void input_hobbit_teams(int n,Hobbit_team t[n])
     for(i=0;i<n;i++)
 	scanf("%d%d%d%d",&t[i].team_member[1].speed,&t[i].team_member[2].speed,&t[i].team_member[3].speed,&t[i].team_member[4].speed);
 }
-void hobbitpair_1stbridge_crossing(int n,int i,Hobbit_team t[n],Hobbit_pairs p1[6])
+void create_hobbit_pairs_for_1st_bridge_crossing(int n,int i,Hobbit_team t[n],Hobbit_pairs p1[6])
 {
     p1[0].a.speed=t[i].team_member[1].speed;
     p1[0].b.speed=t[i].team_member[2].speed;
@@ -44,7 +44,7 @@ void hobbitpair_1stbridge_crossing(int n,int i,Hobbit_team t[n],Hobbit_pairs p1[
     p1[5].a.speed=t[i].team_member[3].speed;
     p1[5].b.speed=t[i].team_member[4].speed;
 }
-void hobbitpair_3rdbridge_crossing(int n,int i,int j,Hobbit_team t[n],Hobbit_pairs p3[3])
+void create_hobbit_pairs_for_3rd_bridge_crossing(int n,int i,int j,Hobbit_team t[n],Hobbit_pairs p3[3])
 {
 	if(j==0)
 	{
@@ -74,7 +74,7 @@ void hobbitpair_3rdbridge_crossing(int n,int i,int j,Hobbit_team t[n],Hobbit_pai
 		p3[2].b.speed=t[i].team_member[3].speed;
 	}
 }
-Hobbit_pairs hobbitpair_5thbridge_crossing(int n, int i,int j,int k,int bridge_crossing[5], Hobbit_team t[n], Hobbit_pairs p5)
+Hobbit_pairs create_hobbit_pairs_for_5th_bridge_crossing(int n, int i,int j,int k,int bridge_crossing[5], Hobbit_team t[n], Hobbit_pairs p5)
 {
 	p5.b.speed=bridge_crossing[4];
 	if(j==0)
@@ -109,17 +109,17 @@ Hobbit_pairs hobbitpair_5thbridge_crossing(int n, int i,int j,int k,int bridge_c
 int compute_shortest_time_to_cross(int n,int i,int l,int bridge_crossing[5], Hobbit_team t[n],Hobbit_pairs p1[6],Hobbit_pairs p3[3],Hobbit_pairs p5)
 {
     int j,k,m,time_to_cross,all_possible_time_values_of_each_team[18];
-    hobbitpair_1stbridge_crossing(n,i,t,p1);
+    create_hobbit_pairs_for_1st_bridge_crossing(n,i,t,p1);
     for(j=0;j<6;j++)
     {
         bridge_crossing[1]=p1[j].b.speed;
         bridge_crossing[2]=p1[j].a.speed;   // because the shortest time taking one comes back
-        hobbitpair_3rdbridge_crossing(n,i,j,t,p3);
+        create_hobbit_pairs_for_3rd_bridge_crossing(n,i,j,t,p3);
         for(k=0;k<3;k++)
         {
             bridge_crossing[3]=p3[k].b.speed;
             bridge_crossing[4]=(p3[k].b.speed<=p3[k].a.speed)?((p3[k].b.speed<=bridge_crossing[1])?p3[k].b.speed:bridge_crossing[1]):((p3[k].a.speed<=bridge_crossing[1])?p3[k].a.speed:bridge_crossing[1]); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-            p5=hobbitpair_5thbridge_crossing(n,i,j,k,bridge_crossing,t,p5);
+            p5=create_hobbit_pairs_for_5th_bridge_crossing(n,i,j,k,bridge_crossing,t,p5);
             if(p5.a.speed>p5.b.speed)
                 bridge_crossing[5]=p5.a.speed;
             else
