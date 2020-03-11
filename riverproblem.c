@@ -1,154 +1,167 @@
 #include<stdio.h>
+struct hobbit
+{
+	int speed; //attribute of hobbit is speed
+};
+typedef struct hobbit Hobbit;
+struct hobbit_team   //hobbit team consist of 2 attributes, hobbits and time to cross by that team
+{
+	//int n; if we have to accept number of hobbits in a team, then next line will be Hobbit team[n];
+	Hobbit team_member[4];  // 4 hobbit team members are present, instead of team_member1, team_member 2,...i made it an array
+	int shortest_time_to_cross; //time to cross for each hobbit team
+};
+typedef struct hobbit_team Hobbit_team;
 struct hobbit_pairs
 {
-	int a;
-	int b;
+	Hobbit a;
+	Hobbit b;
 };
-typedef struct hobbit_pairs Pairs;
-void firstpairs(int n,int hobbit[4],int i,Pairs p1[6])
-{
-	p1[0].a=hobbit[1];
-	p1[0].b=hobbit[2];
-	p1[1].a=hobbit[1];
-	p1[1].b=hobbit[3];
-	p1[2].a=hobbit[1];
-	p1[2].b=hobbit[4];
-	p1[3].a=hobbit[2];
-	p1[3].b=hobbit[3];
-	p1[4].a=hobbit[2];
-	p1[4].b=hobbit[4];
-	p1[5].a=hobbit[3];
-	p1[5].b=hobbit[4];
-}
-void thirdpairs(int n,int hobbit[4],int i,int j,Pairs p3[3])
-{
-	if(j==0)
-	{
-		p3[0].a=hobbit[1];
-		p3[0].b=hobbit[3];
-		p3[1].a=hobbit[1];
-		p3[1].b=hobbit[4];
-		p3[2].a=hobbit[3];
-		p3[2].b=hobbit[4];
-	}
-	else if(j==1||j==3)
-	{
-		p3[0].a=hobbit[1];
-		p3[0].b=hobbit[2];
-		p3[1].a=hobbit[1];
-		p3[1].b=hobbit[4];
-		p3[2].a=hobbit[2];
-		p3[2].b=hobbit[4];
-	}
-	else
-	{
-		p3[0].a=hobbit[1];
-		p3[0].b=hobbit[2];
-		p3[1].a=hobbit[1];
-		p3[1].b=hobbit[3];
-		p3[2].a=hobbit[2];
-		p3[2].b=hobbit[3];
-	}
-}
-int input_numofloops()
+typedef struct hobbit_pairs Hobbit_pairs;
+int get_no_teams()
 {
 	int n;
 	scanf("%d",&n);
 	return n;
 }
-void input_values(int hobbit[4])
+void input_hobbit_teams(int n,Hobbit_team t[n])
 {
-	scanf("%d%d%d%d",&hobbit[1],&hobbit[2],&hobbit[3],&hobbit[4]);
+    int i;
+    for(i=0;i<n;i++)
+	scanf("%d%d%d%d",&t[i].team_member[1].speed,&t[i].team_member[2].speed,&t[i].team_member[3].speed,&t[i].team_member[4].speed);
 }
-Pairs fifthpair(int n, int i,int j,int k,int bridge_crossing[5], int hobbit[4],Pairs p5)
+void hobbitpair_1stbridge_crossing(int n,int i,Hobbit_team t[n],Hobbit_pairs p1[6])
 {
-	p5.b=bridge_crossing[4];
+    p1[0].a.speed=t[i].team_member[1].speed;
+    p1[0].b.speed=t[i].team_member[2].speed;
+    p1[1].a.speed=t[i].team_member[1].speed;
+    p1[1].b.speed=t[i].team_member[3].speed;
+    p1[2].a.speed=t[i].team_member[1].speed;
+    p1[2].b.speed=t[i].team_member[4].speed;
+    p1[3].a.speed=t[i].team_member[2].speed;
+    p1[3].b.speed=t[i].team_member[3].speed;
+    p1[4].a.speed=t[i].team_member[2].speed;
+    p1[4].b.speed=t[i].team_member[4].speed;
+    p1[5].a.speed=t[i].team_member[3].speed;
+    p1[5].b.speed=t[i].team_member[4].speed;
+}
+void hobbitpair_3rdbridge_crossing(int n,int i,int j,Hobbit_team t[n],Hobbit_pairs p3[3])
+{
+	if(j==0)
+	{
+		p3[0].a.speed=t[i].team_member[1].speed;
+		p3[0].b.speed=t[i].team_member[3].speed;
+		p3[1].a.speed=t[i].team_member[1].speed;
+		p3[1].b.speed=t[i].team_member[4].speed;
+		p3[2].a.speed=t[i].team_member[3].speed;
+		p3[2].b.speed=t[i].team_member[4].speed;
+	}
+	else if(j==1||j==3)
+	{
+		p3[0].a.speed=t[i].team_member[1].speed;
+		p3[0].b.speed=t[i].team_member[2].speed;
+		p3[1].a.speed=t[i].team_member[1].speed;
+		p3[1].b.speed=t[i].team_member[4].speed;
+		p3[2].a.speed=t[i].team_member[2].speed;
+		p3[2].b.speed=t[i].team_member[4].speed;
+	}
+	else
+	{
+		p3[0].a.speed=t[i].team_member[1].speed;
+		p3[0].b.speed=t[i].team_member[2].speed;
+		p3[1].a.speed=t[i].team_member[1].speed;
+		p3[1].b.speed=t[i].team_member[3].speed;
+		p3[2].a.speed=t[i].team_member[2].speed;
+		p3[2].b.speed=t[i].team_member[3].speed;
+	}
+}
+Hobbit_pairs hobbitpair_5thbridge_crossing(int n, int i,int j,int k,int bridge_crossing[5], Hobbit_team t[n], Hobbit_pairs p5)
+{
+	p5.b.speed=bridge_crossing[4];
 	if(j==0)
 	{
 		if(k==0)
-			p5.a=hobbit[4];
+			p5.a.speed=t[i].team_member[4].speed;
 		else if(k==1)
-			p5.a=hobbit[3];
+			p5.a.speed=t[i].team_member[3].speed;
 		else
-			p5.a=hobbit[1];
+			p5.a.speed=t[i].team_member[1].speed;
 	}
 	else if(j==1 || j==3)
 	{
 		if(k==0)
-			p5.a=hobbit[4];
+			p5.a.speed=t[i].team_member[4].speed;
 		else if(k==1)
-			p5.a=hobbit[2];
+			p5.a.speed=t[i].team_member[2].speed;
 		else
-			p5.a=hobbit[1];
+			p5.a.speed=t[i].team_member[1].speed;
 	}
 	else
 	{
 		if(k==0)
-			p5.a=hobbit[3];
+			p5.a.speed=t[i].team_member[3].speed;
 		else if(k==1)
-			p5.a=hobbit[2];
+			p5.a.speed=t[i].team_member[2].speed;
 		else
-			p5.a=hobbit[1];
+			p5.a.speed=t[i].team_member[1].speed;
 	}
-	return p5;
+	return p5; // we have to return p5 because p5 is not an array of structures and hence will not behave as call b reference
 }
-int shortest_time_func(int i,int l,int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5])
+int compute_shortest_time_to_cross(int n,int i,int l,int bridge_crossing[5], Hobbit_team t[n],Hobbit_pairs p1[6],Hobbit_pairs p3[3],Hobbit_pairs p5)
 {
-	int j,k,sum,shortest_time,timevalues_eachloop[100];
-	firstpairs(n,hobbit,i,p1);
-	for(j=0;j<6;j++)
-	{
-		bridge_crossing[1]=p1[j].b;
-		bridge_crossing[2]=p1[j].a;   // because the shortest time taking one comes back
-		thirdpairs(n,hobbit,i,j,p3);
-		for(k=0;k<3;k++)
-		{
-			bridge_crossing[3]=p3[k].b;
-			bridge_crossing[4]=(p3[k].b<=p3[k].a)?((p3[k].b<=bridge_crossing[1])?p3[k].b:bridge_crossing[1]):((p3[k].a<=bridge_crossing[1])?p3[k].a:bridge_crossing[1]); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
-			p5=fifthpair(n,i,j,k,bridge_crossing,hobbit,p5);
-			if(p5.a>p5.b)
-				bridge_crossing[5]=p5.a;
-			else
-				bridge_crossing[5]=p5.b;
-			sum=bridge_crossing[1]+bridge_crossing[2]+bridge_crossing[3]+bridge_crossing[4]+bridge_crossing[5];
-			timevalues_eachloop[l]=sum;
-			l++;
-		}
-	}
-	shortest_time=timevalues_eachloop[0];
-	for(i=0;i<l;i++)
-	{
-		if(timevalues_eachloop[i]<shortest_time)
-			shortest_time=timevalues_eachloop[i];
-	}
-	return shortest_time;
+    int j,k,m,time_to_cross,all_possible_time_values_of_each_team[18];
+    hobbitpair_1stbridge_crossing(n,i,t,p1);
+    for(j=0;j<6;j++)
+    {
+        bridge_crossing[1]=p1[j].b.speed;
+        bridge_crossing[2]=p1[j].a.speed;   // because the shortest time taking one comes back
+        hobbitpair_3rdbridge_crossing(n,i,j,t,p3);
+        for(k=0;k<3;k++)
+        {
+            bridge_crossing[3]=p3[k].b.speed;
+            bridge_crossing[4]=(p3[k].b.speed<=p3[k].a.speed)?((p3[k].b.speed<=bridge_crossing[1])?p3[k].b.speed:bridge_crossing[1]):((p3[k].a.speed<=bridge_crossing[1])?p3[k].a.speed:bridge_crossing[1]); //because we have to check the smallest one of the 3 who have reached the other side and not b1,b2,b2,coz b2 not necessarily go in the third pair
+            p5=hobbitpair_5thbridge_crossing(n,i,j,k,bridge_crossing,t,p5);
+            if(p5.a.speed>p5.b.speed)
+                bridge_crossing[5]=p5.a.speed;
+            else
+                bridge_crossing[5]=p5.b.speed;
+            time_to_cross=bridge_crossing[1]+bridge_crossing[2]+bridge_crossing[3]+bridge_crossing[4]+bridge_crossing[5];
+            all_possible_time_values_of_each_team[l]=time_to_cross;
+            l++;
+        }
+    }
+    t[i].shortest_time_to_cross=all_possible_time_values_of_each_team[0];
+    for(m=0;m<l;m++)
+    {
+        if(all_possible_time_values_of_each_team[m]<t[i].shortest_time_to_cross)
+            t[i].shortest_time_to_cross=all_possible_time_values_of_each_team[m];
+    }
+    return t[i].shortest_time_to_cross;
 }
-void shortest_time_eachloop_func(int n,int hobbit[4],Pairs p1[6],Pairs p3[3],Pairs p5,int bridge_crossing[5],int shortesttime_eachloop[n])
+void compute_shortest_time_to_cross_of_all_teams(int n, Hobbit_team t[n], Hobbit_pairs p1[6],Hobbit_pairs p3[3],Hobbit_pairs p5,int bridge_crossing[5],int shortest_time_of_all_teams[n])
 {
-	int i,l=0,shortest_time;
+    int i,l=0;
 	for(i=0;i<n;i++)
 	{
-		input_values(hobbit); //" wrong because input function should not be called by processing functions"
-		shortest_time=shortest_time_func(i,l,n,hobbit,p1,p3,p5,bridge_crossing);
-		shortesttime_eachloop[i]=shortest_time;
+		t[i].shortest_time_to_cross=compute_shortest_time_to_cross(n,i,l,bridge_crossing,t,p1,p3,p5);
+		shortest_time_of_all_teams[i]=t[i].shortest_time_to_cross;
 		l=0; // it's needed because in the next input the loop should start again
 	}
 }
-void output(int n,int shortesttime_eachloop[n])
+void output_shortest_time_of_all_teams(int n,int shortest_time_of_all_teams[n])
 {
 	int i;
 	for(i=0;i<n;i++)
-		printf("%d ",shortesttime_eachloop[i]);
+		printf("%d ",shortest_time_of_all_teams[i]);
 }
 int main()
 {
-	int n;
-	n=input_numofloops();
-	int shortest_time_eachloop[n];
-	int hobbit[6];
+	int n=get_no_teams();
+	Hobbit_team t[n];
+	Hobbit_pairs p1[6],p3[3],p5;
 	int bridge_crossing[5];
-	Pairs p1[6],p3[3],p5;
-	shortest_time_eachloop_func(n,hobbit,p1,p3,p5,bridge_crossing,shortest_time_eachloop);
-	output(n,shortest_time_eachloop);
+	int shortest_time_of_all_teams[n];
+	input_hobbit_teams(n,t);
+	compute_shortest_time_to_cross_of_all_teams(n,t,p1,p3,p5,bridge_crossing,shortest_time_of_all_teams);
+	output_shortest_time_of_all_teams(n,shortest_time_of_all_teams);
 	return 0;
 }
