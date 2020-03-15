@@ -65,14 +65,14 @@ void adding_hobbit_who_came_back(int hob_return,Hobbit_team *t2)
     t2->team_member[b].speed=hob_return;
     t2->n++;
 }
-void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int k,Hobbit_pairs p[],int r1,int r2,Hobbit_team *t2)
+void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int k,Hobbit_pairs p[],Hobbit_team *t2)
 {
-    r1=hob_r[l]=p[k].a.speed;
-    r2=hob_r[l+1]=p[k].b.speed;
-    remove_hobbit_who_reached(r1,t2);
-    remove_hobbit_who_reached(r2,t2);
+    hob_r[l]=p[k].a.speed;
+    hob_r[l+1]=p[k].b.speed;
+    remove_hobbit_who_reached(p[k].a.speed,t2);
+    remove_hobbit_who_reached(p[k].b.speed,t2);
 }
-int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4],int *r1,int *r2)
+int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4])
 {
     int hobbit_returning,j,l=0;// l=0 is needed because if the if statement if not true at all,i.e hob_returning is hob_r[0], then j will be assigned some random value
     hobbit_returning=hob_r[0];  //don't put l=0 in if else statement as the for loop continues even after l is assigned a value and checks until the last possible case
@@ -85,8 +85,8 @@ int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4],int *r1,int *r2)
     adding_hobbit_who_came_back(hobbit_returning,t2);
     for(j=l;j<4-t2->n;j++)
         hob_r[j]=hob_r[j+1];
-    *r1=hob_r[0];
-    *r2=hob_r[1]; //have to be called by reference
+    //*r1=hob_r[0];
+    //*r2=hob_r[1]; //have to be called by reference
     return hobbit_returning;
 }
 void put_back_3_hob_to_check_all_cases(int temp,int i,int n,Hobbit_team t[n],Hobbit_team *t2)
@@ -102,27 +102,27 @@ int compute_t_crs(int i,int n,Hobbit_team t[n],int l,int all_t_val[18],Hobbit_te
     Hobbit_pairs p1[6],p3[3],p5[1];
     int b_crs[5]; //bridge crossing time
 	int hob_r[4]; //hobbits who reached
-    int j,k,m,hob_r_pos,t_crs,temp,r1=0,r2=0; // ***r1 and r2 are temporary variables which store the values of hob which "are on" the opp side, temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
+    int j,k,m,hob_r_pos,t_crs,temp; //temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
     create_pairs(t2,p1);
     for(j=0;j<6;j++)
     {
         temp=b_crs[0]=p1[j].b.speed;// as t1<=t2<=t3<=t4
         hob_r_pos=0; //position of the hob reaching the other side
-        hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p1,r1,r2,t2);
-        b_crs[1]=find_which_hobbit_returns(t2,hob_r,&r1,&r2); //we use this instead of add hob because add hob func is called in find hob func
+        hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p1,t2);
+        b_crs[1]=find_which_hobbit_returns(t2,hob_r); //we use this instead of add hob because add hob func is called in find hob func
         create_pairs(t2,p3);
         for(k=0;k<3;k++)
         {
             b_crs[2]=p3[k].b.speed;
             hob_r_pos=1;
-            hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,k,p3,r1,r2,t2);
-            b_crs[3]=find_which_hobbit_returns(t2,hob_r,&r1,&r2);
+            hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,k,p3,t2);
+            b_crs[3]=find_which_hobbit_returns(t2,hob_r);
             create_pairs(t2,p5);
             for(m=0;m<1;m++)
             {
                 b_crs[4]=p5[m].b.speed;
                 hob_r_pos=2;
-                hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,m,p5,r1,r2,t2);
+                hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,m,p5,t2);
             }
             put_back_3_hob_to_check_all_cases(temp,i,n,t,t2); // add the 3 hobbits back to try for different time values
             t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
