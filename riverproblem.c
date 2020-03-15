@@ -65,7 +65,7 @@ void adding_hobbit_who_came_back(int hob_return,Hobbit_team *t2)
     t2->team_member[b].speed=hob_return;
     t2->n++;
 }
-void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int k,Hobbit_pairs p[],int r1,int r2,Hobbit_team *t2)
+void hobbit_pairs_reaching_opp_side(int hob_r[4],int k,Hobbit_pairs p[],int r1,int r2,Hobbit_team *t2)
 {
     r1=hob_r[1]=p[k].a.speed;
     r2=hob_r[2]=p[k].b.speed;
@@ -102,27 +102,24 @@ int compute_t_crs(int i,int n,Hobbit_team t[n],int l,int all_t_val[18],Hobbit_te
     Hobbit_pairs p1[6],p3[3],p5[1];
     int b_crs[5]; //bridge crossing time
 	int hob_r[4]; //hobbits who reached
-    int j,k,hob_r_pos,m,t_crs,temp,r1=0,r2=0; // ***r1 and r2 are temporary variables which store the values of hob which "are on" the opp side, temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
+    int j,k,m,t_crs,temp,r1=0,r2=0; // ***r1 and r2 are temporary variables which store the values of hob which "are on" the opp side, temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
     create_pairs(t2,p1);
     for(j=0;j<6;j++)
     {
         temp=hob_r[0]=b_crs[0]=p1[j].b.speed;// as t1<=t2<=t3<=t4
-        hob_r_pos=0;
-        hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p1,r1,r2,t2);
+        hobbit_pairs_reaching_opp_side(hob_r,j,p1,r1,r2,t2);
         b_crs[1]=find_which_hobbit_returns(t2,hob_r,&r1,&r2); //we use this instead of add hob because add hob func is called in find hob func
         create_pairs(t2,p3);
         for(k=0;k<3;k++)
         {
             b_crs[2]=p3[k].b.speed;
-            hob_r_pos=1;
-            hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,k,p3,r1,r2,t2);
+            hobbit_pairs_reaching_opp_side(hob_r,k,p3,r1,r2,t2);
             b_crs[3]=find_which_hobbit_returns(t2,hob_r,&r1,&r2);
             create_pairs(t2,p5);
             for(m=0;m<1;m++)
             {
                 b_crs[4]=p5[m].b.speed;
-                hob_r_pos=2;
-                hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,m,p5,r1,r2,t2);
+                hobbit_pairs_reaching_opp_side(hob_r,m,p5,r1,r2,t2);
             }
             put_back_3_hob_to_check_all_cases(temp,i,n,t,t2); // add the 3 hobbits back to try for different time values
             t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
@@ -146,11 +143,11 @@ void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)
 }
 void compute_st_all_T(int n,Hobbit_team t[n],int st_all_T[n])
 {
-    Hobbit_team *t2;
+    Hobbit_team *t2; 
     int i,a;
 	for(i=0;i<n;i++)
 	{
-	    t2->n=4;
+	    t2->n=4; //core is getting dumped here that's because we did assign the structure pointer an address 
 	    for(a=0;a<4;a++)
             t2->team_member[a].speed=t[i].team_member[a].speed;
 		compute_st(i,n,t,t2);
