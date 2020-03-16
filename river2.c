@@ -143,12 +143,12 @@ int find_pair_no(int k, int j)
 void compute_t_crs(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t2)
 {
     Hobbit_pairs p[6];
-    int b_crs[5],hob_r[4],j,k,m=0,p_num=6,hob_r_pos=0,t_crs,l=0;                                   //hobbits who reached  //bridge crossing time
-    for(k=0;k<18;k++)
-    {
-        create_pairs(*t2,p);
+    int b_crs[5],hob_r[4],j,k,m=0,p_num=6,hob_r_pos=0,t_crs;                                   //hobbits who reached  //bridge crossing time
+    for(k=0;k<18;k++)                                                                         // m is incrementing the b_crossing value for every loop
+    {                                                                                         // hob_r_pos is the position of the hobbit who reached the other side
         for(j=0;j<3;j++)
         {
+            create_pairs(*t2,p);
             p_num=find_pair_no(k,j);
             b_crs[m]=p[p_num].b.speed;                                                          // as t1<=t2<=t3<=t4
             hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p,t2);
@@ -156,19 +156,14 @@ void compute_t_crs(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t
                 b_crs[m+1]=find_which_hobbit_returns(t2,hob_r);                                 //we use this instead of add_hob because add_hob func is called in find hob func
             m+=2;
             hob_r_pos++;
-            if(j==2)
-            {
-                put_back_all_hob_to_check_all_cases(i,n,t,t2);                                   // add the 3 hobbits back to try for different time values
-                t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
-                all_t_val[l]=t_crs;
-                l++;
-                m=0;                                                                             //  it should start over again
-                hob_r_pos=0;                                                                     //  it should start over again
-            }
         }
+        put_back_all_hob_to_check_all_cases(i,n,t,t2);                                         // add all the hobbits back to try for different time values
+        t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
+        all_t_val[k]=t_crs;
+        hob_r_pos=m=0;                                                                         //  it should start over again
     }
 }
-void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)                                     // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
+void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)                                 // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
 {
     int m,all_t_val[18];                                                                      // l=0 it's needed because in the next input the loop should start again
     compute_t_crs(i,n,t,all_t_val,t2);
