@@ -1,15 +1,15 @@
 #include<stdio.h>
 struct hobbit
 {
-	int speed; //attribute of hobbit is speed
+	int speed;                                                         //attribute of hobbit is speed
 };
 typedef struct hobbit Hobbit;
-struct hobbit_team   //hobbit team consist of 2 attributes, hobbits and time to cross by that team
+struct hobbit_team                                                    //hobbit team consist of 2 attributes, hobbits and time to cross by that team
 {
-	int n; // no of hobbits in that team
-    Hobbit team_member[4];  // 4 hobbit team members are present, instead of team_member1, team_member 2,...i made it an array
-	int st_crs; //time to cross for each hobbit team
-};  // making this structure an array of structures will be the no of teams present
+	int n;                                                            // no of hobbits in that team
+    Hobbit team_member[4];                                            // 4 hobbit team members are present, instead of team_member1, team_member 2,...i made it an array
+	int st_crs;                                                       //time to cross for each hobbit team
+};                                                                    // making this structure an array of structures will be the no of teams present
 typedef struct hobbit_team Hobbit_team;
 struct hobbit_pairs
 {
@@ -23,20 +23,34 @@ int get_no_teams()
 	scanf("%d",&n);
 	return n;
 }
-void input_hobbit_teams(int n,Hobbit_team t[n])
+int input_hobbit_speed()
+{
+    int hob;
+    scanf("%d",&hob);
+    return hob;
+}
+Hobbit_team input_hobbits_of_a_team()
+{
+    int i;
+    Hobbit_team t;
+    for(i=0;i<4;i++)
+        t.team_member[i].speed=input_hobbit_speed();
+    return t;
+}
+void input_all_hob_teams(int n,Hobbit_team t[n])
 {
     int i;
     for(i=0;i<n;i++)
-	scanf("%d%d%d%d",&t[i].team_member[0].speed,&t[i].team_member[1].speed,&t[i].team_member[2].speed,&t[i].team_member[3].speed);
+        t[i]=input_hobbits_of_a_team();
 }
-void create_pairs(Hobbit_team *t2,Hobbit_pairs p[])
+void create_pairs(Hobbit_team t2,Hobbit_pairs p[])               // don't pass by reference until data is getting manipulated in that function
 {
-    int j,k,l=0;
-    for(j=0;j<t2->n;j++)
+    int j,k,l=0;                                                 // l is a variable which increments the pair number
+    for(j=0;j<t2.n;j++)
         for(k=j+1;k<t2->n;k++)
         {
-            p[l].a.speed=t2->team_member[j].speed;
-            p[l].b.speed=t2->team_member[k].speed;
+            p[l].a.speed=t2.team_member[j].speed;
+            p[l].b.speed=t2.team_member[k].speed;
             l++;
         }
 }
@@ -54,13 +68,13 @@ void remove_hobbit_who_reached(int r,Hobbit_team *t2)
 }
 void adding_hobbit_who_came_back(int hob_return,Hobbit_team *t2)
 {
-    int a,b=0; //if hob returning is 0 th element
+    int a,b=0;                                                                //b=0; if hob returning is 0 th element
     for(a=0;a<t2->n;a++)
     {
         if(hob_return>t2->team_member[a].speed)
             b=a+1;
     }
-    for(a=t2->n-1;a>=b;a--)  // **** a--;
+    for(a=t2->n-1;a>=b;a--)                                                    // **** a--;
         t2->team_member[a+1].speed=t2->team_member[a].speed;
     t2->team_member[b].speed=hob_return;
     t2->n++;
@@ -74,9 +88,9 @@ void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int k,Hobbit_pairs p[],Ho
 }
 int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4])
 {
-    int hobbit_returning,j,l=0;// l=0 is needed because if the if statement if not true at all,i.e hob_returning is hob_r[0], then j will be assigned some random value
-    hobbit_returning=hob_r[0];  //don't put l=0 in if else statement as the for loop continues even after l is assigned a value and checks until the last possible case
-    for(j=0;j<4-t2->n;j++)            // and obviously don't put it after the if statement because it'll then take for all loops l=0;
+    int hobbit_returning,j,l=0;                                                    // l=0 is needed because if the if statement if not true at all,i.e hob_returning is hob_r[0], then j will be assigned some random value
+    hobbit_returning=hob_r[0];                                                     //don't put l=0 in if else statement as the for loop continues even after l is assigned a value and checks until the last possible case
+    for(j=0;j<4-t2->n;j++)                                                         // and obviously don't put it after the if statement because it'll then take for all loops l=0;
         if(hob_r[j]<hobbit_returning)
         {
             hobbit_returning=hob_r[j];
@@ -85,8 +99,6 @@ int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4])
     adding_hobbit_who_came_back(hobbit_returning,t2);
     for(j=l;j<4-t2->n;j++)
         hob_r[j]=hob_r[j+1];
-    //*r1=hob_r[0];
-    //*r2=hob_r[1]; //have to be called by reference
     return hobbit_returning;
 }
 void put_back_3_hob_to_check_all_cases(int temp,int i,int n,Hobbit_team t[n],Hobbit_team *t2)
@@ -100,16 +112,16 @@ void put_back_3_hob_to_check_all_cases(int temp,int i,int n,Hobbit_team t[n],Hob
 int compute_t_crs(int i,int n,Hobbit_team t[n],int l,int all_t_val[18],Hobbit_team *t2)
 {
     Hobbit_pairs p1[6],p3[3],p5[1];
-    int b_crs[5]; //bridge crossing time
-	int hob_r[4]; //hobbits who reached
-    int j,k,m,hob_r_pos,t_crs,temp; //temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
+    int b_crs[5];                                                                         //bridge crossing time
+	int hob_r[4];                                                                         //hobbits who reached
+    int j,k,m,hob_r_pos,t_crs,temp;                                                       //temp is just a temporary variable that stores the values of the 1st hob who remained on the other side(reached the other side)
     create_pairs(t2,p1);
     for(j=0;j<6;j++)
     {
-        temp=b_crs[0]=p1[j].b.speed;// as t1<=t2<=t3<=t4
-        hob_r_pos=0; //position of the hob reaching the other side
+        temp=b_crs[0]=p1[j].b.speed;                                                     // as t1<=t2<=t3<=t4
+        hob_r_pos=0;                                                                     //position of the hob reaching the other side
         hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p1,t2);
-        b_crs[1]=find_which_hobbit_returns(t2,hob_r); //we use this instead of add hob because add hob func is called in find hob func
+        b_crs[1]=find_which_hobbit_returns(t2,hob_r);                                     //we use this instead of add_hob because add_hob func is called in find hob func
         create_pairs(t2,p3);
         for(k=0;k<3;k++)
         {
@@ -124,18 +136,18 @@ int compute_t_crs(int i,int n,Hobbit_team t[n],int l,int all_t_val[18],Hobbit_te
                 hob_r_pos=2;
                 hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,m,p5,t2);
             }
-            put_back_3_hob_to_check_all_cases(temp,i,n,t,t2); // add the 3 hobbits back to try for different time values
+            put_back_3_hob_to_check_all_cases(temp,i,n,t,t2);                                                // add the 3 hobbits back to try for different time values
             t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
             all_t_val[l]=t_crs;
             l++;
         }
-        adding_hobbit_who_came_back(temp ,t2); //to check all cases we add this back
+        adding_hobbit_who_came_back(temp ,t2);                                                               //to check all cases we add this back
     }
     return l;
 }
-void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2) // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
+void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)                                     // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
 {
-    int m,l=0,all_t_val[18]; // l=0 it's needed because in the next input the loop should start again
+    int m,l=0,all_t_val[18];                                                                      // l=0 it's needed because in the next input the loop should start again
     l=compute_t_crs(i,n,t,l,all_t_val,t2);
     t2->st_crs=all_t_val[0];
     for(m=0;m<l;m++)
@@ -150,7 +162,7 @@ void compute_st_all_T(int n,Hobbit_team t[n],int st_all_T[n])
     int i,a;
 	for(i=0;i<n;i++)
 	{
-	    t2.n=4; //  IN COMMIT 28, core is getting dumped here, that's because we didn't assign the structure pointer an address
+	    t2.n=4;                                                                                 //  IN COMMIT 28, core is getting dumped here, that's because we didn't assign the structure pointer an address
 	    for(a=0;a<4;a++)
             t2.team_member[a].speed=t[i].team_member[a].speed;
 		compute_st(i,n,t,&t2);
@@ -167,8 +179,8 @@ int main()
 {
     int n=get_no_teams();
 	Hobbit_team t[n];
-	int st_all_T[n]; //shortest time of all teams
-	input_hobbit_teams(n,t);
+	int st_all_T[n];                                                                          //shortest time of all teams
+	input_all_hob_teams(n,t);
 	compute_st_all_T(n,t,st_all_T);
 	output_st_all_T(n,st_all_T);
 	return 0;
