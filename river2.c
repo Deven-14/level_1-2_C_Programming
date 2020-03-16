@@ -79,12 +79,12 @@ void adding_hobbit_who_came_back(int hob_return,Hobbit_team *t2)
     t2->team_member[b].speed=hob_return;
     t2->n++;
 }
-void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int k,Hobbit_pairs p[],Hobbit_team *t2)
+void hobbit_pairs_reaching_opp_side(int hob_r[4],int l,int p_num,Hobbit_pairs p[],Hobbit_team *t2)
 {
-    hob_r[l]=p[k].a.speed;
-    hob_r[l+1]=p[k].b.speed;
-    remove_hobbit_who_reached(p[k].a.speed,t2);
-    remove_hobbit_who_reached(p[k].b.speed,t2);
+    hob_r[l]=p[p_num].a.speed;
+    hob_r[l+1]=p[p_num].b.speed;
+    remove_hobbit_who_reached(p[p_num].a.speed,t2);
+    remove_hobbit_who_reached(p[p_num].b.speed,t2);
 }
 int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4])
 {
@@ -116,7 +116,7 @@ int find_pair_no(int k, int j)
         case 0:
             if(k<=2)
                 p_num=0;
-            else if(k<=5)
+            else if(k<=5)                                                                       // and obviously k>=3, it's not necessary to include because if it's not k<=2 then it's >2 obviously
                     p_num=1;
             else if(k<=8)
                     p_num=2;
@@ -140,10 +140,10 @@ int find_pair_no(int k, int j)
     }
     return p_num;
 }
-void compute_t_crs(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t2)
+void compute_all_possible_t_val(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t2)
 {
     Hobbit_pairs p[6];
-    int b_crs[5],hob_r[4],j,k,m=0,p_num=6,hob_r_pos=0,t_crs;                                   //hobbits who reached  //bridge crossing time
+    int b_crs[5],hob_r[4],j,k,m=0,p_num,hob_r_pos=0,t_crs;                                   //hobbits who reached  //bridge crossing time
     for(k=0;k<18;k++)                                                                         // m is incrementing the b_crossing value for every loop
     {                                                                                         // hob_r_pos is the position of the hobbit who reached the other side
         for(j=0;j<3;j++)
@@ -151,7 +151,7 @@ void compute_t_crs(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t
             create_pairs(*t2,p);
             p_num=find_pair_no(k,j);
             b_crs[m]=p[p_num].b.speed;                                                          // as t1<=t2<=t3<=t4
-            hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,j,p,t2);
+            hobbit_pairs_reaching_opp_side(hob_r,hob_r_pos,p_num,p,t2);                        //p_num **********
             if(j!=2)
                 b_crs[m+1]=find_which_hobbit_returns(t2,hob_r);                                 //we use this instead of add_hob because add_hob func is called in find hob func
             m+=2;
@@ -166,7 +166,7 @@ void compute_t_crs(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t
 void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)                                 // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
 {
     int m,all_t_val[18];                                                                      // l=0 it's needed because in the next input the loop should start again
-    compute_t_crs(i,n,t,all_t_val,t2);
+    compute_all_possible_t_val(i,n,t,all_t_val,t2);
     t2->st_crs=all_t_val[0];
     for(m=0;m<18;m++)
     {
