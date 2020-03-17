@@ -101,7 +101,7 @@ int find_which_hobbit_returns(Hobbit_team *t2,int hob_r[4])
         hob_r[j]=hob_r[j+1];
     return hobbit_returning;
 }
-void put_back_all_hob_to_check_all_cases(int i,int n,Hobbit_team t[n],Hobbit_team *t2)
+void put_back_all_hob_to_check_all_cases(int i,Hobbit_team t[i],Hobbit_team *t2)
 {
     int a;
     for(a=0;a<4;a++)
@@ -140,7 +140,7 @@ int find_pair_no(int k, int j)
     }
     return p_num;
 }
-void compute_all_possible_t_val(int i,int n,Hobbit_team t[n],int all_t_val[18],Hobbit_team *t2)
+void compute_all_possible_t_val(int i,Hobbit_team t[i],int all_t_val[18],Hobbit_team *t2)
 {
     Hobbit_pairs p[6];
     int b_crs[5],hob_r[4],j,k,m=0,p_num,hob_r_pos=0,t_crs;                                   //hobbits who reached  //bridge crossing time
@@ -157,16 +157,16 @@ void compute_all_possible_t_val(int i,int n,Hobbit_team t[n],int all_t_val[18],H
             m+=2;
             hob_r_pos++;
         }
-        put_back_all_hob_to_check_all_cases(i,n,t,t2);                                         // add all the hobbits back to try for different time values
+        put_back_all_hob_to_check_all_cases(i,t,t2);                                         // add all the hobbits back to try for different time values
         t_crs=b_crs[0]+b_crs[1]+b_crs[2]+b_crs[3]+b_crs[4];
         all_t_val[k]=t_crs;
         hob_r_pos=m=0;                                                                         //  it should start over again
     }
 }
-void compute_st(int i,int n,Hobbit_team t[n],Hobbit_team *t2)                                 // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
+void compute_st(int i,Hobbit_team t[i],Hobbit_team *t2)                                      // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
 {                                                                                             //here t2 has to be passed by reference as value is getting changed or this function has to return t2, since it's not a array it won't be passed by reference automatically
     int m,all_t_val[18];                                                                      // l=0 it's needed because in the next input the loop should start again
-    compute_all_possible_t_val(i,n,t,all_t_val,t2);
+    compute_all_possible_t_val(i,t,all_t_val,t2);                                            // don't pass t[n] when it's not required, as only t[i] is required
     t2->st_crs=all_t_val[0];
     for(m=0;m<18;m++)
     {
@@ -183,7 +183,7 @@ void compute_st_all_T(int n,Hobbit_team t[n],int st_all_T[n])
 	    t2.n=4;                                                                                 //  IN COMMIT 28, core is getting dumped here, that's because we didn't assign the structure pointer an address
 	    for(a=0;a<4;a++)
             t2.team_member[a].speed=t[i].team_member[a].speed;
-		compute_st(i,n,t,&t2);
+		compute_st(i,t,&t2);
 		st_all_T[i]=t2.st_crs;
 	}
 }
