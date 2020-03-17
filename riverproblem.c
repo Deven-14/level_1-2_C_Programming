@@ -114,23 +114,12 @@ int find_pair_no(int k, int j)
     switch(j)
     {
         case 0:
-            if(k<=2)
-                p_num=0;
-            else if(k<=5)                                                       // and obviously k>=3, it's not necessary to include because if it's not k<=2 then it's >2 obviously
-                    p_num=1;
-            else if(k<=8)
-                    p_num=2;
-            else if(k<=11)
-                    p_num=3;
-            else if(k<=14)
-                    p_num=4;
-            else
-                p_num=5;
+            p_num=0;
             break;
         case 1:
-            if(k%3==0)                                                          //includes k=0 case
+            if(k==0)                                                          //includes k=0 case
                 p_num=0;
-            else if(k==1||k==4||k==7||k==10||k==13||k==16)
+            else if(k==1)
                 p_num=1;
             else
                 p_num=2;
@@ -140,11 +129,11 @@ int find_pair_no(int k, int j)
     }
     return p_num;
 }
-void compute_all_possible_t_val(int i,Hobbit_team t[i],int all_t_val[18],Hobbit_team *t2)
+void compute_all_possible_t_val(int i,Hobbit_team t[i],int all_t_val[3],Hobbit_team *t2)
 {
     Hobbit_pairs p[6];
     int b_crs[5],hob_r[4],j,k,m=0,p_num,hob_r_pos=0,t_crs;                                   //hobbits who reached  //bridge crossing time
-    for(k=0;k<18;k++)                                                                         // m is incrementing the b_crossing value for every loop
+    for(k=0;k<3;k++)                                                                         // m is incrementing the b_crossing value for every loop
     {                                                                                         // hob_r_pos is the position of the hobbit who reached the other side
         for(j=0;j<3;j++)
         {
@@ -163,12 +152,12 @@ void compute_all_possible_t_val(int i,Hobbit_team t[i],int all_t_val[18],Hobbit_
         hob_r_pos=m=0;                                                                         //  it should start over again
     }
 }
-void compute_st(int i,Hobbit_team t[i],Hobbit_team *t2)                                      // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
+void compute_st(int i,Hobbit_team t[i],Hobbit_team *t2)                                 // here t2 is a formal parameter which is a pointer, to avoid confusion u can write here Hobbit_team *ptr, therefore ptr will have the address of t2
 {                                                                                             //here t2 has to be passed by reference as value is getting changed or this function has to return t2, since it's not a array it won't be passed by reference automatically
-    int m,all_t_val[18];                                                                      // l=0 it's needed because in the next input the loop should start again
-    compute_all_possible_t_val(i,t,all_t_val,t2);                                            // don't pass t[n] when it's not required, as only t[i] is required
+    int m,all_t_val[3];                                                                      // l=0 it's needed because in the next input the loop should start again
+    compute_all_possible_t_val(i,t,all_t_val,t2);
     t2->st_crs=all_t_val[0];
-    for(m=0;m<18;m++)
+    for(m=0;m<3;m++)
     {
         if(all_t_val[m]<t2->st_crs)
             t2->st_crs=all_t_val[m];
