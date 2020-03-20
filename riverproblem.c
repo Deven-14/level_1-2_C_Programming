@@ -79,12 +79,12 @@ void adding_hobbit_who_came_back(int hob_return,Hobbit_team *t_A)
     t_A->team_member[b].speed=hob_return;
     t_A->n++;
 }
-void remove_hobbit_pair_which_reached(Hobbit_team *t_B,int p_num,Hobbit_pairs p[],Hobbit_team *t_A)
+void move_pair(Hobbit_team *t_B,Hobbit_pairs p,Hobbit_team *t_A)
 {
-    t_B->team_member[t_B->n].speed=p[p_num].a.speed;                                                  //starts from t_B.n=0
+    t_B->team_member[t_B->n].speed=p.a.speed;                                                  //starts from t_B.n=0
     remove_hobbit_who_reached(t_B,t_A);
     t_B->n++;                                                                                         //makes this t_B.n=1
-    t_B->team_member[t_B->n].speed=p[p_num].b.speed;
+    t_B->team_member[t_B->n].speed=p.b.speed;
     remove_hobbit_who_reached(t_B,t_A);
 }
 int find_which_hobbit_returns(Hobbit_team *t_A,Hobbit_team *t_B)
@@ -134,12 +134,12 @@ void find_next_3_crossing(int k,Hobbit_team *t_A,Hobbit_team *t_B,int b_crs[5])
     create_pairs(*t_A,p3);
     b_crs[2]=p3[k].b.speed;
     t_B->n=1;
-    remove_hobbit_pair_which_reached(t_B,k,p3,t_A);
+    move_pair(t_B,p3[k],t_A);
     b_crs[3]=find_which_hobbit_returns(t_A,t_B);
     create_pairs(*t_A,p5);
     b_crs[4]=p5[0].b.speed;
     t_B->n=2;
-    remove_hobbit_pair_which_reached(t_B,0,p5,t_A);
+    move_pair(t_B,p5[0],t_A);
     t_B->n=4;                                                                           // indicating all 4 hobbits have reached, if not put t_B.n will be 3 as we take it from 0 to 3
 }
 void find_time_val(Hobbit_team *t_A,int time_values[3])
@@ -152,7 +152,7 @@ void find_time_val(Hobbit_team *t_A,int time_values[3])
     create_pairs(*t_A,p1);
     b_crs[0]=p1[0].b.speed;                                                             // as t1<=t2<=t3<=t4
     t_B.n=0;
-    remove_hobbit_pair_which_reached(&t_B,0,p1,t_A);                                    //do it using these functions as 2nd hobbits has to be removed from A and put to B
+    move_pair(&t_B,p1[0],t_A);                                    //do it using these functions as 2nd hobbits has to be removed from A and put to B
     b_crs[1]=find_which_hobbit_returns(t_A,&t_B);
     for(k=0;k<3;k++)
     {
