@@ -54,25 +54,25 @@ void create_pairs(Hobbit_team t_A,Hobbit_pairs p[])                             
             l++;
         }
 }
-void remove_hobbit_who_reached(Hobbit h,Hobbit_team *t_A)
+void remove_hobbit(Hobbit h,Hobbit_team *t)
 {
     int a,b;
-    for(a=0;a<t_A->n;a++)
+    for(a=0;a<t->n;a++)
     {
-        if(h.speed==t_A->team_member[a].speed)
+        if(h.speed==t->team_member[a].speed)
         {
             b=a;
             break;
         }
     }
-    for(a=b;a<t_A->n-1;a++)                                                                            // a<t_A->n-1 coz a+1 is there
-        t_A->team_member[a].speed=t_A->team_member[a+1].speed;
-    t_A->n--;
+    for(a=b;a<t->n-1;a++)                                                                            // a<t_A->n-1 coz a+1 is there
+        t->team_member[a].speed=t->team_member[a+1].speed;
+    t->n--;
 }
 void adding_hobbit_who_came_back(Hobbit h,Hobbit_team *t_A)
 {
     int a,b=0;                                                                                         //b=0; if hob returning is 0 th element
-    for(a=0;a<t_A->n;a++)
+    for(a=0;a<t_A->n;a++)                                                                              // adding the hobbits in order
     {
         if(h.speed>t_A->team_member[a].speed)
             b=a+1;
@@ -86,28 +86,23 @@ void move_pair(Hobbit_team *t_B,Hobbit_pairs p,Hobbit_team *t_A)
 {
     Hobbit h;
     h.speed=t_B->team_member[t_B->n].speed=p.a.speed;                                                   //starts from t_B.n=0
-    remove_hobbit_who_reached(h,t_A);
+    remove_hobbit(h,t_A);
     t_B->n++;                                                                                           //says 1 element present,therfore n=1
     h.speed=t_B->team_member[t_B->n].speed=p.b.speed;                                                   //saves in nth element, so n++ in the next line
-    remove_hobbit_who_reached(h,t_A);
+    remove_hobbit(h,t_A);
     t_B->n++;                                                                                           //says 2 elements present, therefore at last says 4 elements present, i.e t_B.n=4;
 }
-int find_and_add_back_hobbit_returning(Hobbit_team *t_A,Hobbit_team *t_B)
+int find_fastest_hobbit(Hobbit_team *t_B)
 {
-    Hobbit h;
-    int j,l=0;                                                                                          // l=0 is needed because if the if statement if not true at all,i.e hob_returning is hob_r[0], then j will be assigned some random value
-    h.speed=t_B->team_member[0].speed;                                                                  //don't put l=0 in if else statement as the for loop continues even after l is assigned a value and checks until the last possible case
-    for(j=0;j<t_B->n;j++)                                                                               // and obviously don't put it after the if statement because it'll then take for all loops l=0;
-        if(t_B->team_member[j].speed<h.speed)
+    Hobbit h_fastest;
+    h_fastest.speed=t_B->team_member[0].speed;
+    for(int j=0;j<t_B->n;j++)
+        if(t_B->team_member[j].speed<h_fastest.speed)
         {
-            h.speed=t_B->team_member[j].speed;
-            l=j;
+            h_fastest.speed=t_B->team_member[j].speed;
+            break;
         }
-    adding_hobbit_who_came_back(h,t_A);
-    for(j=l;j<t_B->n;j++)
-        t_B->team_member[j].speed=t_B->team_member[j+1].speed;
-    t_B->n--;
-    return h.speed;
+    return h_fastest.speed;
 }
 void sort(Hobbit_team *t_B)                                                                              //sorting team members of B so team B has to be passed
 {
@@ -131,22 +126,26 @@ void reset_A_with_3_hobbits(Hobbit_team *t_A,Hobbit_team *t_B)
     t_A->n=4;
     t_B->n=0;
     h.speed=t_B->team_member[0].speed=t_A->team_member[1].speed;                                            //adding 2nd hobbits back to B
-    remove_hobbit_who_reached(h,t_A);                                                                       //removing 2nd hobbit from A
+    remove_hobbit(h,t_A);                                                                       //removing 2nd hobbit from A
     t_B->n++;                                                                                               //put this after removing function itself, coz t_B.n value is used in that function...
 }
 void find_next_3_crossing(int k,Hobbit_team *t_A,Hobbit_team *t_B,int b_crs[5])
 {
+    Hobbit h_returning;
     Hobbit_pairs p3[3],p5[1];
     create_pairs(*t_A,p3);
     b_crs[2]=p3[k].b.speed;
     move_pair(t_B,p3[k],t_A);
-    b_crs[3]=find_and_add_back_hobbit_returning(t_A,t_B);
+    h_returning.speed=b_crs[3]=find_fastest_hobbit(t_B);
+    remove_hobbit(h_returning,t_B);
+    adding_hobbit_who_came_back(h_returning,t_A);
     create_pairs(*t_A,p5);
     b_crs[4]=p5[0].b.speed;
     move_pair(t_B,p5[0],t_A);
 }
 void find_time_val(Hobbit_team *t_A,int time_values[3])
 {
+    Hobbit h_returning;
     Hobbit_team t_B;                                                                                         //team members on the other side
     t_A->n=4;
     t_B.n=0;
@@ -156,7 +155,9 @@ void find_time_val(Hobbit_team *t_A,int time_values[3])
     b_crs[0]=p1[0].b.speed;                                                                                  // as t1<=t2<=t3<=t4
     t_B.n=0;
     move_pair(&t_B,p1[0],t_A);                                                                               //do it using these functions as 2nd hobbits has to be removed from A and put to B
-    b_crs[1]=find_and_add_back_hobbit_returning(t_A,&t_B);
+    h_returning.speed=b_crs[1]=find_fastest_hobbit(&t_B);
+    remove_hobbit(h_returning,&t_B);
+    adding_hobbit_who_came_back(h_returning,t_A);
     for(k=0;k<3;k++)
     {
         find_next_3_crossing(k,t_A,&t_B,b_crs);
