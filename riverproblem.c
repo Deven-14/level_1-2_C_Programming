@@ -129,6 +129,17 @@ void reset_A_with_3_hobbits(Hobbit_team *t_A,Hobbit_team *t_B)
     remove_hobbit(h,t_A);                                                                       //removing 2nd hobbit from A
     t_B->n++;                                                                                               //put this after removing function itself, coz t_B.n value is used in that function...
 }
+void find_1st_2_crossings(Hobbit_team *t_A,Hobbit_team *t_B,int b_crs[5])
+{
+    Hobbit_pairs p1[6];
+    Hobbit h_returning;
+    create_pairs(*t_A,p1);
+    b_crs[0]=p1[0].b.speed;                                                                                  // as t1<=t2<=t3<=t4
+    move_pair(t_B,p1[0],t_A);                                                                               //do it using these functions as 2nd hobbits has to be removed from A and put to B
+    h_returning.speed=b_crs[1]=find_fastest_hobbit(t_B);
+    remove_hobbit(h_returning,t_B);
+    adding_hobbit_who_came_back(h_returning,t_A);
+}
 void find_next_3_crossing(int k,Hobbit_team *t_A,Hobbit_team *t_B,int b_crs[5])
 {
     Hobbit h_returning;
@@ -145,19 +156,11 @@ void find_next_3_crossing(int k,Hobbit_team *t_A,Hobbit_team *t_B,int b_crs[5])
 }
 void find_time_val(Hobbit_team *t_A,int time_values[3])
 {
-    Hobbit h_returning;
     Hobbit_team t_B;                                                                                         //team members on the other side
     t_A->n=4;
     t_B.n=0;
-    Hobbit_pairs p1[6];
     int b_crs[5],k,t_crs;
-    create_pairs(*t_A,p1);
-    b_crs[0]=p1[0].b.speed;                                                                                  // as t1<=t2<=t3<=t4
-    t_B.n=0;
-    move_pair(&t_B,p1[0],t_A);                                                                               //do it using these functions as 2nd hobbits has to be removed from A and put to B
-    h_returning.speed=b_crs[1]=find_fastest_hobbit(&t_B);
-    remove_hobbit(h_returning,&t_B);
-    adding_hobbit_who_came_back(h_returning,t_A);
+    find_1st_2_crossings(t_A,&t_B,b_crs);
     for(k=0;k<3;k++)
     {
         find_next_3_crossing(k,t_A,&t_B,b_crs);
