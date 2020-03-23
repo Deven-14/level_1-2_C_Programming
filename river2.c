@@ -88,3 +88,4 @@ int main()
                and if b3=t2 ( (t3,t4)if passed ) then b4=t2 ((t2,t1)remaining)
         b2=b3,b3=t1,b4=t4 is same as b2=t4,b3=t1,b4=t3
  therefore should check if(t3+t1+t4>t4+t2+t2) */
+// U CAN USE 2 DIMENSIONAL ARRAY ALSO
