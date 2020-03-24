@@ -20,32 +20,29 @@ void swap(int *a,int *b)
 }
 void partition(int n, int a[n])
 {
-    int i,j,k=0,l=0,p;
+    int i,j,k=0,p;
     p=a[0];
     for(i=1;i<n;i++)
     {
         if(a[i]<=p)
         {
             a[k]=a[i];
-            l=i;
             k++;
-            for(int q=k;q<i;q++)
-            {
-                for(j=n-1;j>i;j--)
-                {
-                    if(a[j]<=p)
+        }
+        else
+        {
+            for(j=n-1;j>i;j--)
+                if(a[j]<=p)
                     {
-                        swap(&a[j],&a[q]);
+                        a[k]=a[j];
                         k++;
+                        a[j]=a[i];
                         break;
                     }
-                }
-                if(j==i)
-                    break;
-            }
+            if(j==i)
+                break;
         }
     }
-    a[l]=a[k];
     a[k]=p;
 }
 void output(int n, int a[n])
