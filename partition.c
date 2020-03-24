@@ -12,20 +12,40 @@ void input_ele(int n,int a[n])
     for(int i=0;i<n;i++)
         scanf("%d",&a[i]);
 }
+void swap(int *a,int *b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
 void partition(int n, int a[n])
 {
-    int i,j=0,k=0,p=0;
+    int i,j,k=0,l=0,p;
     p=a[0];
-    for(i=1;i<n;i++)                                                                                             //for all ele<=pivot
+    for(i=1;i<n;i++)
     {
-        if(p>=a[i])
+        if(a[i]<=p)
         {
             a[k]=a[i];
-            j=i;
+            l=i;
             k++;
+            for(int q=k;q<i;q++)
+            {
+                for(j=n-1;j>i;j--)
+                {
+                    if(a[j]<=p)
+                    {
+                        swap(&a[j],&a[q]);
+                        k++;
+                        break;
+                    }
+                }
+                if(j==i)
+                    break;
+            }
         }
     }
-    a[j]=a[k];//next ele after shifting all ele <= pivot to the left
+    a[l]=a[k];
     a[k]=p;
 }
 void output(int n, int a[n])
