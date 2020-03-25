@@ -14,22 +14,17 @@ void input_ele(int n,int a[n])
 }
 void partition(int n, int a[n])
 {
-    int i=1,j=n-1,k=0,p=a[0];
+    int i=1,j=n-1,k=0,l=0,p=a[0];
     while(i<n)
     {
-        if(a[i]<=p)
-        {
-            a[k]=a[i];
-            k++;
-        }
-        else
+        if(a[i]>p)
         {
             while(j>i)
             {
                 if(a[j]<=p)
                 {
                     a[k]=a[j];
-                    k++;
+                    l=k=i;
                     a[j]=a[i];
                     j--;
                     break;
@@ -37,9 +32,12 @@ void partition(int n, int a[n])
                 j--;
             }
         }
+        else
+            l=i;
         i++;
     }
-    a[k]=p;
+    a[k]=a[l];
+    a[l]=p;
 }
 void output(int n, int a[n])
 {
