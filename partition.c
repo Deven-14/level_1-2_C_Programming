@@ -14,8 +14,9 @@ void input_ele(int n,int a[n])
 }
 void partition(int n, int a[n])
 {
-    int i=1,j=n-1,k=0,l=0,p=a[0];
-    while(i<n)
+    int i=1,j=n-1,p=a[0];
+    int *p_k=&a[0],*p_l=&a[0];
+    while(i<=j)                                      //i<=j constraint 2, i<n constraint 1
     {
         if(a[i]>p)
         {
@@ -23,8 +24,8 @@ void partition(int n, int a[n])
             {
                 if(a[j]<=p)
                 {
-                    a[k]=a[j];
-                    l=k=i;
+                    *p_k=a[j];                     //a[k] became *p_k and as k holds the specific value of i, same *p_k holds the address of a[i]
+                    p_l=p_k=&a[i];
                     a[j]=a[i];
                     j--;
                     break;
@@ -33,15 +34,15 @@ void partition(int n, int a[n])
             }
         }
         else
-            l=i;
+            p_l=&a[i];
         i++;
     }
-    a[k]=a[l];
-    a[l]=p;
+    *p_k=*p_l;
+    *p_l=p;
 }
 void output(int n, int a[n])
 {
-    printf("The array elements after partition with constraint 1 are:\n");
+    printf("The array elements after partition with efficient(trial to remove l,k) constraint 1 and 2 are:\n");
     for(int i=0;i<n;i++)
         printf("%d ",a[i]);
 }
