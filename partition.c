@@ -12,33 +12,72 @@ void input_ele(int n,int a[n])
     for(int i=0;i<n;i++)
         scanf("%d",&a[i]);
 }
-void partition(int n, int a[n])
+void swap(int *a, int *b)
 {
-    int i=1,j=n-1,p=a[0];
-    int *p_k=&a[0],*p_l=&a[0];
-    while(i<=j)                                      //i<=j constraint 2, i<n constraint 1
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+int find_larger_element_from_left_bw_interval(int i,int j, int a[])
+{
+    while(i<=j)
     {
-        if(a[i]>p)
-        {
-            while(j>i)
-            {
-                if(a[j]<=p)
-                {
-                    *p_k=a[j];                     //a[k] became *p_k and as k holds the specific value of i, same *p_k holds the address of a[i]
-                    p_l=p_k=&a[i];
-                    a[j]=a[i];
-                    j--;
-                    break;
-                }
-                j--;
-            }
-        }
-        else
-            p_l=&a[i];
+        if(a[i]>a[0])
+            break;
         i++;
     }
-    *p_k=*p_l;
-    *p_l=p;
+    return i;
+}
+int find_smaller_element_from_right_bw_interval(int i,int j, int a[])
+{
+    while(j>i)
+    {
+        if(a[j]<=a[0])
+            break;
+        j--;
+    }
+    return j;
+}
+void partition(int n, int a[n])
+{
+    int i=1,i1,j1,j=n-1,p=a[0];
+    i=find_larger_element_from_left_bw_interval(i,j,a);
+    j=find_smaller_element_from_right_bw_interval(i,j,a);
+    while(i<j)
+    {
+        i1=find_larger_element_from_left_bw_interval(i+1,j-1,a);
+        j1=find_smaller_element_from_right_bw_interval(i1,j-1,a);
+        if(i1!=i && j1!=j && i1<j1)
+        {
+            swap(&a[i],&a[j]);
+            i=i1;
+            j=j1;
+        }
+        else if(i!=j && i1==j1)
+        {
+            if(i1!=i+1)
+            {
+                swap(&a[i],&a[j]);
+                swap(&a[i1-1],&a[0]);
+                break;
+            }
+            else
+            {
+                a[0]=a[j];
+                a[j]=a[i];
+                a[i]=p;
+                break;
+            }
+        }
+        else if(i1>j1)
+        {
+            swap(&a[i],&a[j]);
+            swap(&a[0],&a[i1-1]);
+            break;
+        }
+    }
+    if(i>=j)
+        swap(&a[i-1],&a[0]);
 }
 void output(int n, int a[n])
 {
