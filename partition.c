@@ -19,7 +19,7 @@ void partition(int n, int a[n])
     {
         while(j>i)
         {
-            if(a[j]<=p)
+            if(a[j]<=p)  // j should be above i while finding, because we are putting i=0...order of finding j and i matters....
             {
                 a[i]=a[j];
                 m=j;
