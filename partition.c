@@ -14,7 +14,7 @@ void input_ele(int n,int a[n])
 }
 void partition(int n, int a[n])
 {
-    int i=0,j=n-1,p=a[0];
+    int i=0,j=n-1,m=0,p=a[0];
     while(i!=j)
     {
         while(j>i)
@@ -22,25 +22,29 @@ void partition(int n, int a[n])
             if(a[j]<=p)
             {
                 a[i]=a[j];
-                break;
+                m=j;
+                j=i;
             }
             j--;
         }
+        j=m;
         while(i<j)
         {
             if(a[i]>p)
             {
                 a[j]=a[i];
-                break;
+                m=i;
+                i=j;
             }
             i++;
         }
+        i=m;
     }
     a[j]=p;
 }
 void output(int n, int a[n])
 {
-    printf("The array elements after partition with constraint 1 are:\n");
+    printf("The array elements after partition with constraint 3 are:\n");
     for(int i=0;i<n;i++)
         printf("%d ",a[i]);
 }
