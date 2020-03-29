@@ -12,39 +12,49 @@ void input_ele(int n,int a[n])
     for(int i=0;i<n;i++)
         scanf("%d",&a[i]);
 }
+void swap(int *a,int *b)
+{
+    int t=*a;
+    *a=*b;
+    *b=t;
+}
 void partition(int n, int a[n])
 {
-    int i=0,j=n-1,m=0,p=a[0];
-    while(i!=j)
+    int i=0,j,k=n-1;
+    while(k>i)
     {
-        while(j>i)
+        if(a[k]<=a[0])
         {
-            if(a[j]<=p)  // j should be above i while finding, because we are putting i=0...order of finding j and i matters....
-            {
-                a[i]=a[j];
-                m=j;
-                j=i;
-            }
-            j--;
-        }
-        j=m;
-        while(i<j)
-        {
-            if(a[i]>p)
-            {
-                a[j]=a[i];
-                m=i;
-                i=j;
-            }
+            swap(&a[0],&a[k]);
             i++;
+            break;
         }
-        i=m;
+        else
+            k--;
     }
-    a[j]=p;
+    j=k-1;  //a[k] has pivot value now
+    while(j>=i)
+    {
+        if(a[j]<=a[k]) // j should be above i while finding, because at last it will be i>j, and then we can swap a[i] with pivot,"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"...order of finding j and i matters....
+        {
+            if(a[i]>a[k])
+            {
+                swap(&a[i],&a[j]);
+                j--;
+                i++;
+            }
+            else
+                i++;
+        }
+        else
+            j--;
+        if(i>j)
+            swap(&a[i],&a[k]);
+    }
 }
 void output(int n, int a[n])
 {
-    printf("The array elements after partition with constraint 3 are:\n");
+    printf("The array elements after partition with constraint 4 are:\n");
     for(int i=0;i<n;i++)
         printf("%d ",a[i]);
 }
