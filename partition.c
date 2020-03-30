@@ -20,23 +20,36 @@ void swap(int *a,int *b)
 }
 void partition(int n, int a[n])
 {
-    int i=0,j=n-1,p=a[0];
-    while(i!=j)
+    int i=0,j,k=n-1;
+    while(a[k]>a[0])
     {
-        while(j>i && a[j]>p)  // a[j]>p condition is reversed because the loop should run of false values
+          k--;
+    }
+    if(a[k]<=a[0])
+    {
+        swap(&a[0],&a[k]);
+        i++;
+    }
+    j=k-1;
+    while(j>=i)
+    {
+        while(a[j]>a[k]) // j should be above i while finding, because at last it will be i>j, and then we can swap a[i] with pivot,"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"...order of finding j and i matters....
         {
             j--;
         }
-        if(a[j]<=p)
-            a[i]=a[j];
-         while(i<j && a[i]<=p)
+        while(i<=j && a[i]<=a[k])
         {
             i++;
         }
-        if(a[i]>p)
-            a[j]=a[i];
+        if(a[i]>a[k] && j>i)
+        {
+            swap(&a[i],&a[j]);
+            i++;
+            j--;
+        }
+        if(i>j && i<n)
+            swap(&a[i],&a[k]);
     }
-    a[j]=p;
 }
 void output(int n, int a[n])
 {
