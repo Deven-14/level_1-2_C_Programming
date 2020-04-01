@@ -30,9 +30,9 @@ void partition(int n, int a[n])
         swap(&a[0],&a[k]);
         j=k-1;
     }
-    while(j>i)
+    while(j>=i)
     {
-         while(i<j && a[i]<=a[k]) // j and i swpped then, we have to find next i and then j.....order of finding j and i matters....
+         while(i<=j && a[i]<=a[k]) // j and i swpped then, we have to find next i and then j.....order of finding j and i matters....
         {
             i++;
         }
@@ -43,9 +43,11 @@ void partition(int n, int a[n])
         if(j>i)
         {
             swap(&a[i],&a[j]);
+            i++;
+            j--;
         }
     }
-    if((i==j && a[i]>a[k])|| i>j)
+    if(i>j)
         swap(&a[i],&a[k]);
 }
 void output(int n, int a[n])
