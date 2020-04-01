@@ -36,7 +36,7 @@ void partition(int n, int a[n])
         {
             i++;
         }
-        while(a[j]>a[k]) //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
+        while(j>i && a[j]>a[k]) //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
         {
             j--;
         }
@@ -47,7 +47,7 @@ void partition(int n, int a[n])
             j--;
         }
     }
-    if((i==j && a[i]<a[k]) || i>j)
+    if((i==j && a[i]>a[k]) || i>j)
         swap(&a[i],&a[k]);
 }
 void output(int n, int a[n])
