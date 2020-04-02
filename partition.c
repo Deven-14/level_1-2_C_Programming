@@ -23,7 +23,7 @@ void partition(int n, int a[n])
     int i=1,j=n-1;
     while(j>i)
     {
-        while(j>i && a[j]>a[0]) //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
+        while(a[j]>a[0]) //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
         {
             j--;
         }
