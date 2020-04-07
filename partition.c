@@ -31,22 +31,19 @@ void partition(int n, int a[n])
     }
     while(j>i)
     {
-        swap(&a[i],&a[j]);                                                                                   // where swap is placed also matters...
+        swap(&a[i],&a[j]);// where swap is placed also matters...
         i++;
         j--;
-        while(a[j]>a[0])                                                                                     //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
+        while(a[j]>a[0]) //"the last element gets swapped twice(last ele and pivot is one of the 2 cases)--allowed"
         {
             j--;
         }
-         while(j>i && a[i]<=a[0])                                                                             //smaller element is swapped last, so j has to be found first.....order of finding j and i matters....
+         while(a[i]<=a[0]) //smaller element is swapped last, so j has to be found first.....order of finding j and i matters....
         {
             i++;
         }
     }
-    if(i==j && a[j]<a[0])                                                                                     // last element can checked twice and swapped twice
-        swap(&a[i],&a[0]);
-    else
-        swap(&a[i-1],&a[0]);                                                                                  // for i>j
+    swap(&a[j],&a[0]);// only i>j case gets terminated
 }
 void output(int n, int a[n])
 {
