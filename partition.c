@@ -25,7 +25,7 @@ void partition(int n, int a[n])
     {
         j--;
     }
-     while(a[i]<=a[0])
+     while(j>i && a[i]<=a[0])
     {
         i++;
     }
