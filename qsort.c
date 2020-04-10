@@ -18,10 +18,8 @@ int cmpstr(const void *x,const void *y)
 {
 	if(*(char *)x==*(char *)y)
 		return 0;
-	else if(*(char *)x>*(char *)y)
-		return *(char *)x-*(char *)y;
 	else
-		return *(char *)x-*(char *)y;// because it should return negative value itslef not positive value, so x-y itslef
+		return *(char *)x-*(char *)y;                                                         //for x>y it'll return positive value and for x<y it'll return negative value
 }
 void output(int n,char s[n][50])
 {
@@ -35,7 +33,7 @@ int main()
     n=input_no_of_str();
     char s[n][50];
     input_ele(n,s);
-    qsort(&s[0][0],n,sizeof(s[0]),cmpstr);//it should be sizeof(s[0]) itself not sizeof(char)
+    qsort(&s[0][0],n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
     output(n,s);
     return 0;
 }
