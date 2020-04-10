@@ -21,7 +21,7 @@ int cmpstr(const void *x,const void *y)
 	else if(*(char *)x>*(char *)y)
 		return *(char *)x-*(char *)y;
 	else
-		return *(char *)y-*(char *)x;
+		return *(char *)x-*(char *)y;// because it should return negative value itslef not positive value, so x-y itslef
 }
 void output(int n,char s[n][50])
 {
