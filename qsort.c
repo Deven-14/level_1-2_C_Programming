@@ -16,7 +16,12 @@ void input_ele(int n,char s[n][50])
 }
 int cmpstr(const void *x,const void *y)
 {
-    return strcmp(*(const char **)x,*(const char **)y);
+	if(*(char *)x==*(char *)y)
+		return 0;
+	else if(*(char *)x>*(char *)y)
+		return *(char *)x-*(char *)y;
+	else
+		return *(char *)y-*(char *)x;
 }
 void output(int n,char s[n][50])
 {
@@ -30,7 +35,7 @@ int main()
     n=input_no_of_str();
     char s[n][50];
     input_ele(n,s);
-    qsort(&s[0],n,sizeof(char),cmpstr);
+    qsort(&s[0][0],n,sizeof(s[0]),cmpstr);//it should be sizeof(s[0]) itself not sizeof(char)
     output(n,s);
     return 0;
 }
