@@ -1,40 +1,36 @@
 #include<stdio.h>
+#include<string.h>
 #include<stdlib.h>
-int input_no_of_ele()
+int input_no_of_str()
 {
     int a;
-    printf("Enter the number of elements:\n");
+    printf("Enter the number of strings:\n");
     scanf("%d",&a);
     return a;
 }
-void input_ele(int n,int a[n])
+void input_ele(int n,char s[n][50])
 {
-    printf("Enter the elements of the array:\n");
+    printf("Enter the strings:\n");
     for(int i=0;i<n;i++)
-        scanf("%d",&a[i]);
+        scanf("%s[^\n]",s[i]);
 }
-int cmpint(const void *x,const void *y)
+int cmpstr(const void *x,const void *y)
 {
-    if(*(int *)x>*(int *)y)
-        return 1;
-    else if(*(int *)x<*(int *)y)
-        return -1;
-    else
-        return 0;
+    return strcmp(*(const char **)x,*(const char **)y);
 }
-void output(int n, int a[n])
+void output(int n,char s[n][50])
 {
     printf("The array elements after qsort are:\n");
     for(int i=0;i<n;i++)
-        printf("%d ",a[i]);
+        puts(s[i]);
 }
 int main()
 {
     int n;
-    n=input_no_of_ele();
-    int a[n];
-    input_ele(n,a);
-    qsort(&a[0],n,sizeof(a[0]),cmpint);
-    output(n,a);
+    n=input_no_of_str();
+    char s[n][50];
+    input_ele(n,s);
+    qsort(&s[0],n,sizeof(char),cmpstr);
+    output(n,s);
     return 0;
 }
