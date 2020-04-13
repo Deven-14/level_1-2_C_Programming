@@ -28,7 +28,12 @@ int cmpstr(const void *x,const void *y)
 		i++;
 	}
     if(s_x==s_y)
-        return *(char *)x-*(char *)y;//for cases like cg,gc, the output should be cg,gc and not gc,cg, so....
+	{
+		i=0;
+		while(*((char *)x+i)==*((char *)y+i))
+			i++;
+		return *((char *)x+i)-*((char *)y+i);//for cases like cg,gc, the output should be cg,gc and not gc,cg, eg...., acd,adc....
+	}
     else
 	    return s_x-s_y;
 }
