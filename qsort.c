@@ -1,6 +1,6 @@
 #include<stdio.h>
-#include<stdlib.h>
 #include<string.h>
+#include<stdlib.h>
 int input_no_of_str()
 {
     int a;
@@ -8,17 +8,17 @@ int input_no_of_str()
     scanf("%d",&a);
     return a;
 }
-void input_ele(int n,char s[n][50])
+void input_ele(int n,char *s[n])
 {
     printf("Enter the strings:\n");
     for(int i=0;i<n;i++)
-        scanf("%s[^\n]",s[i]);
+        scanf("%ms",&s[i]);//%ms is used,use online gdb
 }
 int cmpstr(const void *x,const void *y)
 {
-	return strcmp((const char *)x,(const char *)y);
+    return strcmp(*(const char **)x,*(const char **)y);
 }
-void output(int n,char s[n][50])
+void output(int n,char *s[n])
 {
     printf("The array elements after qsort are:\n");
     for(int i=0;i<n;i++)
@@ -28,9 +28,9 @@ int main()
 {
     int n;
     n=input_no_of_str();
-    char s[n][50]; 
+    char *s[n];                                                                                            //s is the name of the pointer as well as the string name, that's y 1st argument in qsort is &s[0] and in puts we no need to use *s[i], just s[i]
     input_ele(n,s);
-    qsort(&s[0],n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
-    output(n,s);   
+    qsort(s,n,sizeof(char *),cmpstr);                                                                  // sizeof(char *) is same as sizeof(s[0]), and first argument can be &s[0] or s
+    output(n,s);
     return 0;
 }
