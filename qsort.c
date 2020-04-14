@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 int input_no_of_str()
 {
     int a;
@@ -15,27 +16,7 @@ void input_ele(int n,char s[n][50])
 }
 int cmpstr(const void *x,const void *y)
 {
-	int s_x=0,s_y=0,i=0;
-	while(*((char *)x+i)!='\0')
-	{
-		s_x+=(int)*((char *)x+i);
-		i++;
-	}
-	i=0;
-	while(*((char *)y+i)!='\0')
-	{
-		s_y+=(int)*((char *)y+i);
-		i++;
-	}
-    if(s_x==s_y)
-	{
-		i=0;
-		while(*((char *)x+i)==*((char *)y+i))
-			i++;
-		return *((char *)x+i)-*((char *)y+i);//for cases like cg,gc, the output should be cg,gc and not gc,cg, eg...., acd,adc....
-	}
-    else
-	    return s_x-s_y;
+	return strcmp((const char *)x,(const char *)y);
 }
 void output(int n,char s[n][50])
 {
@@ -49,7 +30,7 @@ int main()
     n=input_no_of_str();
     char s[n][50]; 
     input_ele(n,s);
-    qsort(s,n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
+    qsort(&s[0],n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
     output(n,s);   
     return 0;
 }
