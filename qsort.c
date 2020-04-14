@@ -10,19 +10,26 @@ int input_no_of_str()
 }
 void input_ele(int n,char *s[n])
 {
+	for(int i=0;i<n;i++)
+		s[i]=(char *)malloc(50*sizeof(char));
     printf("Enter the strings:\n");
     for(int i=0;i<n;i++)
-        scanf("%ms",&s[i]);//%ms is used,use online gdb
+        scanf("%s",s[i]);
 }
 int cmpstr(const void *x,const void *y)
 {
-    return strcmp(*(const char **)x,*(const char **)y);
+	return strcmp(*(const char **)x,*(const char **)y);
 }
 void output(int n,char *s[n])
 {
-    printf("The array elements after qsort are:\n");
-    for(int i=0;i<n;i++)
-        puts(s[i]);
+	printf("The array elements after qsort are:\n");
+	for(int i=0;i<n;i++)
+		puts(s[i]);
+	for(int i=0;i<n;i++)
+	{
+		free(s[i]);
+		s[i]=NULL;
+	}
 }
 int main()
 {
