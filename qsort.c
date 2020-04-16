@@ -1,43 +1,66 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-int input_no_of_str()
+typedef struct student
+{
+	int roll;
+	char name[50];
+	float percentage;
+}Student;
+int input_no_of_students()
 {
     int a;
-    printf("Enter the number of strings:\n");
+    printf("Enter the number of studnets:\n");
     scanf("%d",&a);
     return a;
 }
-void input_ele(int n,char *s[n])
+void input_ele(int n,Student s[n])
 {
-	for(int i=0;i<n;i++)
-		s[i]=(char *)malloc(50*sizeof(char));// commit 3 won't work as p is a local variable and it's data gets removed and changed to garbage after that function is done with execution and the program moves to the next function
-    printf("Enter the strings:\n");
-    for(int i=0;i<n;i++)
-        scanf("%s",s[i]);
-}
-int cmpstr(const void *x,const void *y)
-{
-	return strcmp(*(const char **)x,*(const char **)y);
-}
-void output(int n,char *s[n])
-{
-	printf("The array elements after qsort are:\n");
-	for(int i=0;i<n;i++)
-		puts(s[i]);
 	for(int i=0;i<n;i++)
 	{
-		free(s[i]);
-		s[i]=NULL;
+		printf("Enter student %d's roll number, name and percentage :\n",i);
+		scanf("%d %s %f",&s[i].roll,s[i].name,&s[i].percentage);
 	}
+}
+int cmproll(const void *x,const void *y)
+{
+	int a=((Student *)x)->roll; //Student *p; then p->roll;
+	int b=((Student *)y)->roll;
+	return a-b;
+}
+int cmpname(const void *x,const void *y)
+{
+	return strcmp(((Student *)x)->name,((Student *)y)->name);
+}
+int cmp_percentage(const void *x,const void *y)
+{
+	return ((Student *)y)->percentage-((Student *)x)->percentage;// decending order
+}
+void sort(int n,Student s[n])
+{
+	char ch;
+	printf("Sort according to Roll number(R)/Name(N)/Percentage(P)?\n");
+	scanf(" %c",&ch);
+	if(ch=='R')
+		qsort(s,n,sizeof(s[0]),cmproll);
+	else if(ch=='N')
+		qsort(s,n,sizeof(s[0]),cmpname);
+	else
+		qsort(s,n,sizeof(s[0]),cmp_percentage);
+}
+void output(int n,Student s[n])
+{
+	printf("The order after sorting is:\nRoll number - Name - Percentage\n");
+	for(int i=0;i<n;i++)
+		printf("%d %s %f\n",s[i].roll,s[i].name,s[i].percentage);
 }
 int main()
 {
     int n;
-    n=input_no_of_str();
-    char *s[n];                                                                                            //s is the name of the pointer as well as the string name, that's y 1st argument in qsort is &s[0] and in puts we no need to use *s[i], just s[i]
+    n=input_no_of_students();
+    Student s[n];
     input_ele(n,s);
-    qsort(s,n,sizeof(char *),cmpstr);                                                                  // sizeof(char *) is same as sizeof(s[0]), and first argument can be &s[0] or s
+    sort(n,s);
     output(n,s);
     return 0;
 }
