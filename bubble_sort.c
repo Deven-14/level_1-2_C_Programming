@@ -20,28 +20,25 @@ int cmpint(const void *x,const void *y)
 void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,const void*))
 {
 	int i,j,x,k;
-	char *temp;                                                                                    //making it char because we are swapping it bit wise(void pointer can't be dereferenced)
-	temp=(char*)malloc(size);
+	char temp;
 	for(i=0;i<nmemb-1;i++)
 	{
 		for(j=0;j<nmemb-i-1;j++)
 		{
-			x=compare((base+j),(base+j+1));
+			x=compare((base+(size*j)),(base+(size*j)+1));                                            //(base+j)and(base+j+1)is wrong as the void pointer won't know after how many bits is the next one
 			if(x>0)                                                                                  //i.e if *(base+i) is greater
 			{                                                                                        //cannot dereference a void pointer obviously because it won't know how many bits of data to accessed, we have to type cast to dereference
 				k=0;
 				while(k!=size)                                                                       //swapping each bit untill it the required bit size is reached
 				{
-					*temp=*(char*)(base+j+k);
-					*(char*)(base+j+k)=*(char*)(base+j+1+k);
-					*(char*)(base+j+1+k)=*temp;
+					temp=*((char*)base+(size*j)+k);                                                  //*********not*(char*)(base+j+k),but*((char*)base+j+k)
+					*((char*)base+(size*j)+k)=*((char*)base+(size*j)+1+k);
+					*((char*)base+(size*j)+1+k)=temp;
 					k++;
 				}
 			}
 		}
 	}
-	free(temp);
-	temp=NULL;
 }
 void output(int n, int a[n])
 {
