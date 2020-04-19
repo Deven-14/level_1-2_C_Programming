@@ -1,21 +1,22 @@
 #include<stdio.h>
 #include<stdlib.h>
-int input_no_of_ele()
+#include<string.h>
+int input_no_of_str()
 {
     int a;
-    printf("Enter the number of elements:\n");
+    printf("Enter the number of strings:\n");
     scanf("%d",&a);
     return a;
 }
-void input_ele(int n,int a[n])
+void input_ele(int n,char s[n][50])
 {
-    printf("Enter the elements of the array:\n");
+    printf("Enter the strings:\n");
     for(int i=0;i<n;i++)
-        scanf("%d",&a[i]);
+        scanf("%s[^\n]",s[i]);
 }
-int cmpint(const void *x,const void *y)
+int cmpstr(const void *x,const void *y)
 {
-    return *(int *)x-*(int *)y;
+	return strcmp((const char *)x,(const char *)y);
 }
 void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,const void*))
 {
@@ -40,19 +41,19 @@ void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,c
 		}
 	}
 }
-void output(int n, int a[n])
+void output(int n,char s[n][50])
 {
     printf("The array elements after bubblesort are:\n");
     for(int i=0;i<n;i++)
-        printf("%d ",a[i]);
+        puts(s[i]);
 }
 int main()
 {
     int n;
-    n=input_no_of_ele();
-    int a[n];
-    input_ele(n,a);
-	bubblesort(a,n,sizeof(a[0]),cmpint);
-    output(n,a);
+    n=input_no_of_str();
+    char s[n][50]; 
+    input_ele(n,s);
+    bubblesort(s,n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
+    output(n,s);   
     return 0;
 }
