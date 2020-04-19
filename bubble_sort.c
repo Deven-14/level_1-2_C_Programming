@@ -1,6 +1,6 @@
 #include<stdio.h>
-#include<stdlib.h>
 #include<string.h>
+#include<stdlib.h>
 int input_no_of_str()
 {
     int a;
@@ -8,15 +8,17 @@ int input_no_of_str()
     scanf("%d",&a);
     return a;
 }
-void input_ele(int n,char s[n][50])
+void input_ele(int n,char *s[n])
 {
+	for(int i=0;i<n;i++)
+		s[i]=(char *)malloc(50*sizeof(char));
     printf("Enter the strings:\n");
     for(int i=0;i<n;i++)
-        scanf("%s[^\n]",s[i]);
+        scanf("%s",s[i]);
 }
 int cmpstr(const void *x,const void *y)
 {
-	return strcmp((const char *)x,(const char *)y);
+	return strcmp(*(const char **)x,*(const char **)y);
 }
 void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,const void*))
 {
@@ -41,19 +43,24 @@ void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,c
 		}
 	}
 }
-void output(int n,char s[n][50])
+void output(int n,char *s[n])
 {
-    printf("The array elements after bubblesort are:\n");
-    for(int i=0;i<n;i++)
-        puts(s[i]);
+	printf("The array elements after bubblesort are:\n");
+	for(int i=0;i<n;i++)
+		puts(s[i]);
+	for(int i=0;i<n;i++)
+	{
+		free(s[i]);
+		s[i]=NULL;
+	}
 }
 int main()
 {
     int n;
     n=input_no_of_str();
-    char s[n][50]; 
+    char *s[n];                                                                                            //s is the name of the pointer as well as the string name, that's y 1st argument in qsort is &s[0] and in puts we no need to use *s[i], just s[i]
     input_ele(n,s);
-    bubblesort(s,n,sizeof(s[0]),cmpstr);                                                    //it should be sizeof(s[0]) itself not sizeof(char)
-    output(n,s);   
+    bubblesort(s,n,sizeof(char *),cmpstr);                                                                  // sizeof(char *) is same as sizeof(s[0]), and first argument can be &s[0] or s
+    output(n,s);
     return 0;
 }
