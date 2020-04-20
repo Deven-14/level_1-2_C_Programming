@@ -38,26 +38,24 @@ int cmp_percentage(const void *x,const void *y)
 }
 void bubblesort(void *base,size_t nmemb,size_t size,int (*compare)(const void*,const void*))
 {
-	int i,j,x,k;
-	char temp;                                                                                       //since we are swapping bit by bit we don't need char* only char is enough
+	int i,j,x;
+	void *temp;
+	temp=malloc(size);//since we are swapping bit by bit we don't need char* only char is enough
 	for(i=0;i<nmemb-1;i++)
 	{
 		for(j=0;j<nmemb-i-1;j++)
 		{
 			x=compare((base+(size*j)),(base+(size*(j+1))));                                          //(base+j)and(base+j+1)is wrong as the void pointer won't know after how many bits is the next one
 			if(x>0)                                                                                  //i.e if *(base+i) is greater
-			{                                                                                        //cannot dereference a void pointer obviously because it won't know how many bits of data to accessed, we have to type cast to dereference
-				k=0;
-				while(k!=size)                                                                       //swapping each bit untill it the required bit size is reached
-				{
-					temp=*((char*)base+(size*j)+k);                                                  //*********not*(char*)(base+j+k),but*((char*)base+j+k)
-					*((char*)base+(size*j)+k)=*((char*)base+(size*(j+1))+k);
-					*((char*)base+(size*(j+1))+k)=temp;
-					k++;
-				}
+			{                                                                               //cannot dereference a void pointer obviously because it won't know how many bits of data to accessed, we have to type cast to dereferenc
+				memcpy(temp,(base+(size*j)),size);                                                  //*********not*(char*)(base+j+k),but*((char*)base+j+k)
+				memcpy((base+(size*j)),(base+(size*(j+1))),size);
+				memcpy((base+(size*(j+1))),temp,size);
 			}
 		}
 	}
+	free(temp);
+	temp=NULL;
 }
 void sort(int n,Student s[n])
 {
