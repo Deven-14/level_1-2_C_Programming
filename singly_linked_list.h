@@ -10,45 +10,40 @@ struct node
 };
 typedef struct node Node;
 
-struct iterator;
-
 struct singlyLinkedList
 {
 	Node *head;
 	Node *tail;
-	size_t sizeOfDataType;
-	struct iterator *i;//to avoid dangling pointer in iterator when i free the singly linked list
 };
 typedef struct singlyLinkedList SinglyLinkedList;
 
 struct iterator
 {
 	Node *curr;
-	struct singlyLinkedList *s;
+	SinglyLinkedList **s;
 };
 typedef struct iterator Iterator;
 
-Node* newNode(size_t, void *);
-SinglyLinkedList* newSinglyLinkedList(size_t);//size_t for sizeOfDataType
+Node* newNode(void *);
+SinglyLinkedList* newSinglyLinkedList();
 
 void addHead(SinglyLinkedList *, void *);
 void addTail(SinglyLinkedList *, void *);
 
 void removeHead(SinglyLinkedList *);
 void removeTail(SinglyLinkedList *);
-void removeSpecificNode(SinglyLinkedList *, void *);
+void removeData(SinglyLinkedList *, void *, int (*compare)(const void *, const void *));
 
-bool search(SinglyLinkedList *, void *);
+void emptySinglyLinkedList(SinglyLinkedList *);
+void freeSinglyLinkedList(SinglyLinkedList **);//**
 
-SinglyLinkedList* freeSinglyLinkedList(SinglyLinkedList *);
+Iterator* newIterator(SinglyLinkedList **);// ** coz, i want to know if *s i.e the SinglyLinikedList *s == NULL or it has a list assigned to it, if *s = null then no operations on the iterator will be performed
 
-Iterator* newIterator(SinglyLinkedList *);
-
-extern void start(Iterator *);//extern coz i have used inline function
+extern void start(Iterator *);
 extern bool end(Iterator *);
 extern void next(Iterator *);
 extern void* data(Iterator *);
 
-Iterator* freeIterator(Iterator *);
+void freeIterator(Iterator **);//**
 
 #endif
