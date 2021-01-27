@@ -27,12 +27,12 @@ typedef struct iterator Iterator;
 Node* newNode(void *);
 SinglyLinkedList* newSinglyLinkedList();
 
-void addHead(SinglyLinkedList *, void *);
-void addTail(SinglyLinkedList *, void *);
+int addHead(SinglyLinkedList *, void *);
+int addTail(SinglyLinkedList *, void *);
 
-void removeHead(SinglyLinkedList *);
-void removeTail(SinglyLinkedList *);
-void removeData(SinglyLinkedList *, void *, int (*compare)(const void *, const void *));
+int removeHead(SinglyLinkedList *);
+int removeTail(SinglyLinkedList *);
+int removeData(SinglyLinkedList *, void *, int (*compare)(const void *, const void *));
 
 void emptySinglyLinkedList(SinglyLinkedList *);
 void freeSinglyLinkedList(SinglyLinkedList **);//**
