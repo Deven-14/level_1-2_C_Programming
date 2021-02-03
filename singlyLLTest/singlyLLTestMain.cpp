@@ -25,8 +25,8 @@ class singlyLinkedListEdgeTest : public testing::Test
 
 TEST_F(singlyLinkedListEdgeTest, addHeadWhenListEmpty)
 {
-	int data = 5;
-	addHead(s, &data);
+	int val = 5;
+	addHead(s, &val);
 	
 	ASSERT_EQ(s->head, s->tail);//checking if the addess is same, for value,we have to derederence
 	ASSERT_EQ(s->head->data, s->tail->data);//again checking for addresss match, not value
@@ -34,12 +34,14 @@ TEST_F(singlyLinkedListEdgeTest, addHeadWhenListEmpty)
 
 TEST_F(singlyLinkedListEdgeTest, addTailWhenListEmpty)
 {
-	int data = 5;
-	addTail(s, &data);
+	int val = 5;
+	addTail(s, &val);
 	
 	ASSERT_EQ(s->head, s->tail);
 	ASSERT_EQ(s->head->data, s->tail->data);
 }
+
+
 
 TEST_F(singlyLinkedListEdgeTest, removeHeadWhenListEmpty)
 {
@@ -51,6 +53,30 @@ TEST_F(singlyLinkedListEdgeTest, removeTailWhenListEmpty)
 	ASSERT_EQ(-1, removeTail(s));
 }
 
+
+
+TEST_F(singlyLinkedListEdgeTest, removeHeadWhenListHasOneEle)
+{
+	int val = 5;
+	addHead(s, &val);
+	
+	removeHead(s);
+	ASSERT_EQ(NULL, s->head);
+	ASSERT_EQ(NULL, s->tail);
+}
+
+TEST_F(singlyLinkedListEdgeTest, removeTailWhenListHasOneEle)
+{
+	int val = 5;
+	addTail(s, &val);
+	
+	removeTail(s);
+	ASSERT_EQ(NULL, s->head);
+	ASSERT_EQ(NULL, s->tail);
+}
+
+
+
 int compare(const void *a, const void *b)
 {
 	return (*(int*)a - *(int*)b);
@@ -58,12 +84,12 @@ int compare(const void *a, const void *b)
 
 TEST_F(singlyLinkedListEdgeTest, removeDataWhenListEmpty)
 {
-	int data = 5;
-	ASSERT_EQ(0, removeData(s, &data, compare));
+	int val = 5;
+	ASSERT_EQ(0, removeData(s, &val, compare));
 }
 
 
-class singlyLinkedListTest : public testing::Test
+class singlyLinkedListAddTest : public testing::Test
 {	
 	public:
 		
@@ -71,7 +97,7 @@ class singlyLinkedListTest : public testing::Test
 		int *values;
 		Iterator *i;
 		
-		singlyLinkedListTest()
+		singlyLinkedListAddTest()
 		{
 			s = newSinglyLinkedList(); 
 			i = newIterator(&s);
@@ -81,7 +107,7 @@ class singlyLinkedListTest : public testing::Test
 		void SetUp() {}
 		void TearDown() {}
 		
-		~singlyLinkedListTest()
+		~singlyLinkedListAddTest()
 		{
 			freeIterator(&i);
 			freeSinglyLinkedList(&s); 
@@ -90,7 +116,7 @@ class singlyLinkedListTest : public testing::Test
 
 };
 
-TEST_F(singlyLinkedListTest, addHeadTest)
+TEST_F(singlyLinkedListAddTest, addHeadTest)
 {
 	int j;
 	for(j = 0; j < 10; ++j)
@@ -103,7 +129,7 @@ TEST_F(singlyLinkedListTest, addHeadTest)
 		ASSERT_EQ(&values[j], data(i));
 }
 
-TEST_F(singlyLinkedListTest, addTailTest)
+TEST_F(singlyLinkedListAddTest, addTailTest)
 {
 	int j;
 	for(j = 0; j < 10; ++j)
@@ -116,7 +142,75 @@ TEST_F(singlyLinkedListTest, addTailTest)
 		ASSERT_EQ(&values[j], data(i));
 }
 
-//CHANGED int *data; TO  int *values; THIS FIXED THE BEFORE ERROR
+
+class singlyLinkedListRemoveTest : public testing::Test
+{	
+	public:
+		
+		singlyLinkedList *s;
+		Iterator *i;
+		int *values;
+		
+		singlyLinkedListRemoveTest()
+		{
+			s = newSinglyLinkedList(); 
+			i = newIterator(&s);
+			values = new int[10]{3,5,3,2,6,7,8,9,3,1};
+		}
+		
+		void SetUp()
+		{
+			for(int j = 0; j < 10; ++j)
+				addTail(s, &values[j]);
+		}
+		void TearDown() {}
+		
+		~singlyLinkedListRemoveTest()
+		{
+			freeSinglyLinkedList(&s); 
+			freeIterator(&i);
+			delete[] values;
+		}
+
+};
+
+
+TEST_F(singlyLinkedListRemoveTest, removeHeadTest)
+{
+	for(int j = 0; j < 10; ++j)
+	{
+		ASSERT_EQ(&values[j], s->head->data);
+		removeHead(s);
+	}
+}
+
+
+TEST_F(singlyLinkedListRemoveTest, removeTailTest)
+{
+	for(int j = 9; j >= 0; --j)
+	{
+		ASSERT_EQ(&values[j], s->tail->data);
+		removeTail(s);
+	}
+}
+
+
+TEST_F(singlyLinkedListRemoveTest, removeDataTest)
+{
+	int val = 3;
+	removeData(s, &val, compare);
+	
+	start(i);//******************************very important, coz we are creating iterator first and then we are we are initializing values, so initially i->curr = NULL; so we have to use start function
+	
+	for(int j = 0; j < 10; ++j)
+	{
+		if(values[j] == 3)
+			continue;
+		ASSERT_EQ(&values[j], data(i));
+		next(i);
+	}
+}
+
 
 int main(int argc, char *argv[])
 {
