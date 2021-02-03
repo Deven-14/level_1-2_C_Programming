@@ -68,14 +68,14 @@ class singlyLinkedListTest : public testing::Test
 	public:
 		
 		singlyLinkedList *s;
-		int *data;
+		int *values;
 		Iterator *i;
 		
 		singlyLinkedListTest()
 		{
 			s = newSinglyLinkedList(); 
 			i = newIterator(&s);
-			data = new int[10]{3,5,3,2,6,7,8,9,3,1};
+			values = new int[10]{3,5,3,2,6,7,8,9,3,1};
 		}
 		
 		void SetUp() {}
@@ -85,7 +85,7 @@ class singlyLinkedListTest : public testing::Test
 		{
 			freeIterator(&i);
 			freeSinglyLinkedList(&s); 
-			delete[] data;
+			delete[] values;
 		}
 
 };
@@ -94,29 +94,29 @@ TEST_F(singlyLinkedListTest, addHeadTest)
 {
 	int j;
 	for(j = 0; j < 10; ++j)
-		addHead(s, &data[j]);
+		addHead(s, &values[j]);
 	
-	ASSERT_EQ(&data[9], s->head->data);
-	ASSERT_EQ(&data[0], s->tail->data);
+	ASSERT_EQ(&values[9], s->head->data);
+	ASSERT_EQ(&values[0], s->tail->data);
 
 	for(start(i), j = 9; j >= 0; --j, next(i))
-		ASSERT_EQ(&data[j], data(i));
+		ASSERT_EQ(&values[j], data(i));
 }
 
 TEST_F(singlyLinkedListTest, addTailTest)
 {
 	int j;
 	for(j = 0; j < 10; ++j)
-		addTail(s, &data[j]);
+		addTail(s, &values[j]);
 	
-	ASSERT_EQ(&data[0], s->head->data);
-	ASSERT_EQ(&data[9], s->tail->data);
+	ASSERT_EQ(&values[0], s->head->data);
+	ASSERT_EQ(&values[9], s->tail->data);
 	
 	for(start(i), j = 0; j < 10; ++j, next(i))
-		ASSERT_EQ(&data[j], data(i));
+		ASSERT_EQ(&values[j], data(i));
 }
 
-//THERE IS AN ERROR HERE, THE FUNCTION OF ITERATOR IS ALSO NAMED data(i) AND THE member data in the test fixture is also named int *data; so there was an error called expression cannot be used as a function
+//CHANGED int *data; TO  int *values; THIS FIXED THE BEFORE ERROR
 
 int main(int argc, char *argv[])
 {
