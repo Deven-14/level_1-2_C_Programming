@@ -1,6 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
-
+#include <cstdlib>
+#include <ctime>
 
 extern "C"
 {
@@ -126,16 +127,24 @@ class singlyLinkedListAddTest : public testing::Test
 		
 		singlyLinkedList *s;
 		int *values;
+		int size;
 		Iterator *i;
 		
 		singlyLinkedListAddTest()
 		{
 			s = newSinglyLinkedList(); 
 			i = newIterator(&s);
-			values = new int[10]{3,5,3,2,6,7,8,9,3,1};
+			
+			srand(time(0));
+			size = rand() % 100 + 1;//+1 so that, size is never zero
+			values = new int[size];
 		}
 		
-		void SetUp() {}
+		void SetUp() 
+		{
+			for(int j = 0; j < size; ++j)
+				values[j] = rand();
+		}
 		void TearDown() {}
 		
 		~singlyLinkedListAddTest()
@@ -150,26 +159,26 @@ class singlyLinkedListAddTest : public testing::Test
 TEST_F(singlyLinkedListAddTest, addHeadTest)
 {
 	int j;
-	for(j = 0; j < 10; ++j)
+	for(j = 0; j < size; ++j)
 		addHead(s, &values[j]);
 	
-	ASSERT_EQ(&values[9], s->head->data);
+	ASSERT_EQ(&values[size-1], s->head->data);
 	ASSERT_EQ(&values[0], s->tail->data);
 
-	for(start(i), j = 9; j >= 0; --j, next(i))
+	for(start(i), j = size-1; j >= 0; --j, next(i))
 		ASSERT_EQ(&values[j], data(i));
 }
 
 TEST_F(singlyLinkedListAddTest, addTailTest)
 {
 	int j;
-	for(j = 0; j < 10; ++j)
+	for(j = 0; j < size; ++j)
 		addTail(s, &values[j]);
 	
 	ASSERT_EQ(&values[0], s->head->data);
-	ASSERT_EQ(&values[9], s->tail->data);
+	ASSERT_EQ(&values[size-1], s->tail->data);
 	
-	for(start(i), j = 0; j < 10; ++j, next(i))
+	for(start(i), j = 0; j < size; ++j, next(i))
 		ASSERT_EQ(&values[j], data(i));
 }
 
@@ -181,17 +190,24 @@ class singlyLinkedListRemoveTest : public testing::Test
 		singlyLinkedList *s;
 		Iterator *i;
 		int *values;
+		int size;
 		
 		singlyLinkedListRemoveTest()
 		{
 			s = newSinglyLinkedList(); 
 			i = newIterator(&s);
-			values = new int[10]{3,5,3,2,6,7,8,9,3,1};
+			
+			srand(time(0));
+			size = rand() % 100 + 1;//+1 so that, size is never zero
+			values = new int[size];
 		}
 		
 		void SetUp()
 		{
-			for(int j = 0; j < 10; ++j)
+			for(int j = 0; j < size; ++j)
+				values[j] = rand();
+			
+			for(int j = 0; j < size; ++j)
 				addTail(s, &values[j]);
 		}
 		void TearDown() {}
@@ -208,7 +224,7 @@ class singlyLinkedListRemoveTest : public testing::Test
 
 TEST_F(singlyLinkedListRemoveTest, removeHeadTest)
 {
-	for(int j = 0; j < 10; ++j)
+	for(int j = 0; j < size; ++j)
 	{
 		ASSERT_EQ(&values[j], s->head->data);
 		removeHead(s);
@@ -218,7 +234,7 @@ TEST_F(singlyLinkedListRemoveTest, removeHeadTest)
 
 TEST_F(singlyLinkedListRemoveTest, removeTailTest)
 {
-	for(int j = 9; j >= 0; --j)
+	for(int j = size-1; j >= 0; --j)
 	{
 		ASSERT_EQ(&values[j], s->tail->data);
 		removeTail(s);
@@ -228,14 +244,14 @@ TEST_F(singlyLinkedListRemoveTest, removeTailTest)
 
 TEST_F(singlyLinkedListRemoveTest, removeDataTest)
 {
-	int val = 3;
+	int val = rand();
 	removeData(s, &val, compare);
 	
 	start(i);//******************************very important, coz we are creating iterator first and then we are we are initializing values, so initially i->curr = NULL; so we have to use start function
 	
-	for(int j = 0; j < 10; ++j)
+	for(int j = 0; j < size; ++j)
 	{
-		if(values[j] == 3)
+		if(values[j] == val)
 			continue;
 		ASSERT_EQ(&values[j], data(i));
 		next(i);
