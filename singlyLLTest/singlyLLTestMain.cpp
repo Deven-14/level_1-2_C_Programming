@@ -89,6 +89,37 @@ TEST_F(singlyLinkedListEdgeTest, removeDataWhenListEmpty)
 }
 
 
+TEST_F(singlyLinkedListEdgeTest, removeDataWhenListHasOneMatchingEle)
+{
+	int val = 5;
+	addTail(s, &val);
+	
+	ASSERT_EQ(0, removeData(s, &val, compare));
+	ASSERT_EQ(NULL, s->head);
+	ASSERT_EQ(NULL, s->tail);
+}
+
+TEST_F(singlyLinkedListEdgeTest, removeDataWhenListHasTwoMatchingEle)
+{
+	int val1 = 5, val2 = 5;
+	addTail(s, &val1);
+	addTail(s, &val2);
+	ASSERT_EQ(0, removeData(s, &val1, compare));
+	ASSERT_EQ(NULL, s->head);
+	ASSERT_EQ(NULL, s->tail);
+}
+
+TEST_F(singlyLinkedListEdgeTest, removeDataWhenListHasAllMatchingEle)
+{
+	int val[5] = {5,5,5,5,5};
+	for(int j = 0; j < 5; ++j)
+		addTail(s, &val[j]);
+	
+	ASSERT_EQ(0, removeData(s, &val[0], compare));
+	ASSERT_EQ(NULL, s->head);
+	ASSERT_EQ(NULL, s->tail);
+}
+
 class singlyLinkedListAddTest : public testing::Test
 {	
 	public:
