@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/deven/unitTest/singlyLinkedList/lib/SinglyLinkedList.c
+/home/deven/level1-2/singlyLLTest/lib/SinglyLinkedList.c
 stdio.h
 -
 stdlib.h
@@ -18,9 +18,9 @@ stdbool.h
 errno.h
 -
 singlyLinkedList.h
-/home/deven/unitTest/singlyLinkedList/lib/singlyLinkedList.h
+/home/deven/level1-2/singlyLLTest/lib/singlyLinkedList.h
 
-/home/deven/unitTest/singlyLinkedList/lib/singlyLinkedList.h
+/home/deven/level1-2/singlyLLTest/lib/singlyLinkedList.h
 stdbool.h
 -
 

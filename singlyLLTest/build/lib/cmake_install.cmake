@@ -1,4 +1,4 @@
-# Install script for directory: /home/deven/unitTest/singlyLinkedList/lib
+# Install script for directory: /home/deven/level1-2/singlyLLTest/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

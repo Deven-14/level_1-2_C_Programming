@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/deven/unitTest/singlyLinkedList
+CMAKE_SOURCE_DIR = /home/deven/level1-2/singlyLLTest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/deven/unitTest/singlyLinkedList/build
+CMAKE_BINARY_DIR = /home/deven/level1-2/singlyLLTest/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/deven/unitTest/singlyLinkedList/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/deven/unitTest/singlyLinkedList/build/CMakeFiles /home/deven/unitTest/singlyLinkedList/build/tests/CMakeFiles/progress.marks
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/deven/unitTest/singlyLinkedList/build/CMakeFiles 0
+	cd /home/deven/level1-2/singlyLLTest/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/deven/level1-2/singlyLLTest/build/CMakeFiles /home/deven/level1-2/singlyLLTest/build/tests/CMakeFiles/progress.marks
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/deven/level1-2/singlyLLTest/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/deven/level1-2/singlyLLTest/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 tests/CMakeFiles/tests.dir/rule:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/tests.dir/rule
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/tests.dir/rule
 .PHONY : tests/CMakeFiles/tests.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ tests: tests/CMakeFiles/tests.dir/rule
 
 # fast build rule for target.
 tests/fast:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
 ArrayTest.o: ArrayTest.cpp.o
@@ -131,7 +131,7 @@ ArrayTest.o: ArrayTest.cpp.o
 
 # target to build an object file
 ArrayTest.cpp.o:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.o
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.o
 .PHONY : ArrayTest.cpp.o
 
 ArrayTest.i: ArrayTest.cpp.i
@@ -140,7 +140,7 @@ ArrayTest.i: ArrayTest.cpp.i
 
 # target to preprocess a source file
 ArrayTest.cpp.i:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.i
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.i
 .PHONY : ArrayTest.cpp.i
 
 ArrayTest.s: ArrayTest.cpp.s
@@ -149,7 +149,7 @@ ArrayTest.s: ArrayTest.cpp.s
 
 # target to generate assembly for a file
 ArrayTest.cpp.s:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.s
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/ArrayTest.cpp.s
 .PHONY : ArrayTest.cpp.s
 
 singlyLLTestMain.o: singlyLLTestMain.cpp.o
@@ -158,7 +158,7 @@ singlyLLTestMain.o: singlyLLTestMain.cpp.o
 
 # target to build an object file
 singlyLLTestMain.cpp.o:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.o
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.o
 .PHONY : singlyLLTestMain.cpp.o
 
 singlyLLTestMain.i: singlyLLTestMain.cpp.i
@@ -167,7 +167,7 @@ singlyLLTestMain.i: singlyLLTestMain.cpp.i
 
 # target to preprocess a source file
 singlyLLTestMain.cpp.i:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.i
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.i
 .PHONY : singlyLLTestMain.cpp.i
 
 singlyLLTestMain.s: singlyLLTestMain.cpp.s
@@ -176,7 +176,7 @@ singlyLLTestMain.s: singlyLLTestMain.cpp.s
 
 # target to generate assembly for a file
 singlyLLTestMain.cpp.s:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.s
+	cd /home/deven/level1-2/singlyLLTest/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.s
 .PHONY : singlyLLTestMain.cpp.s
 
 # Help Target
@@ -205,6 +205,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/deven/unitTest/singlyLinkedList/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/deven/level1-2/singlyLLTest/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -6,5 +6,5 @@ C_FLAGS = -fPIC
 
 C_DEFINES = -DsinglyLL_EXPORTS
 
-C_INCLUDES = -I/home/deven/unitTest/singlyLinkedList/lib 
+C_INCLUDES = -I/home/deven/level1-2/singlyLLTest/lib 
 

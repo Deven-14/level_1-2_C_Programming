@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/deven/unitTest/singlyLinkedList/lib 
+CXX_INCLUDES = -I/home/deven/level1-2/singlyLLTest/lib 
 

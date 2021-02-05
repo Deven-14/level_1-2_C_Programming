@@ -3,7 +3,7 @@
 
 tests/CMakeFiles/tests.dir/ArrayTest.cpp.o
  ../lib/singlyLinkedList.h
- /home/deven/unitTest/singlyLinkedList/tests/ArrayTest.cpp
+ /home/deven/level1-2/singlyLLTest/tests/ArrayTest.cpp
 tests/CMakeFiles/tests.dir/singlyLLTestMain.cpp.o
  ../lib/singlyLinkedList.h
- /home/deven/unitTest/singlyLinkedList/tests/singlyLLTestMain.cpp
+ /home/deven/level1-2/singlyLLTest/tests/singlyLLTestMain.cpp
