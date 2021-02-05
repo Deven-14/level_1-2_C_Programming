@@ -78,6 +78,17 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /home/deven/level1-2/singlyLLTest/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/deven/level1-2/singlyLLTest/build/CMakeFiles /home/deven/level1-2/singlyLLTest/build/tests/CMakeFiles/progress.marks
@@ -187,6 +198,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test"
 	@echo "... tests"
 	@echo "... ArrayTest.o"
 	@echo "... ArrayTest.i"
