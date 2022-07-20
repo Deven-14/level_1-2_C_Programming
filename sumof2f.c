@@ -1,55 +1,60 @@
 #include<stdio.h>
-struct frac
+
+struct fraction
 {
     int n;
     int d;
 };
-typedef struct frac Frac;
-Frac input()
+typedef struct fraction Fraction;
+
+Fraction input_ith_fraction(int i)
 {
-    Frac p;
-    printf("Enter a fraction (n/d):\n");
-    scanf("%d/%d",&p.n,&p.d);
-    return p;
+    Fraction f;
+    printf("Enter fraction %d (n / d): ", i);
+    scanf("%d %d", &f.n, &f.d);
+    return f;
 }
-int gcd(int a,int b)
+
+int gcd(int a, int b)
 {
-    int t;
-    while(b>0)
+    int temp;
+    while(b > 0)
     {
-        t=b;
-        b=a%b;
-        a=t;
+        temp = b;
+        b = a % b;
+        a = temp;
     }
     return a;
 }
-Frac reduce(Frac s)
+
+Fraction reduce(Fraction f)
 {
-    int g;
-    Frac f;
-    g=gcd(s.n,s.d); //because gcd is the greatest common divisor of 2 numbers and so don't pass a structure,instead pass the values of that structure
-    f.n=s.n/g;
-    f.d=s.d/g;
+    int g = gcd(f.n, f.d); //because gcd is the greatest common divisor of 2 numbers and so don't pass a structure,instead pass the values of that structure
+    f.n = f.n / g;
+    f.d = f.d / g;
     return f;
 }
-Frac process(Frac p1,Frac p2)
+
+Fraction sum_of_2_fractions(Fraction f1, Fraction f2)
 {
-    Frac p3,f;
-    p3.n=(p1.n*p2.d)+(p2.n*p1.d);
-    p3.d=p1.d*p2.d;
-    f=reduce(p3);
-    return f;
+    Fraction f_sum;
+    f_sum.n = f1.n * f2.d + f2.n * f1.d;
+    f_sum.d = f1.d * f2.d;
+    f_sum = reduce(f_sum);
+    return f_sum;
 }
-void output(Frac p1,Frac p2,Frac f)
+
+void print_sum(Fraction f1, Fraction f2, Fraction f_sum)
 {
-    printf("The sum of %d/%d + %d/%d = %d/%d\n",p1.n,p1.d,p2.n,p2.d,f.n,f.d);
+    printf("%d/%d + %d/%d = %d/%d\n", f1.n, f1.d, f2.n, f2.d, f_sum.n, f_sum.d);
 }
+
 int main()
 {
-    Frac p1,p2,f;
-    p1=input();
-    p2=input();
-    f=process(p1,p2);
-    output(p1,p2,f);
+    Fraction f1, f2, f_sum;
+    f1 = input_ith_fraction(1);
+    f2 = input_ith_fraction(2);
+    f_sum = sum_of_2_fractions(f1, f2);
+    print_sum(f1, f2, f_sum);
     return 0;
 }
