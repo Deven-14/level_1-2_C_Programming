@@ -1,40 +1,41 @@
 #include<stdio.h>
-int input()
+
+int input_no_of_integers()
 {
     int n;
-    printf("Enter the number of inputs\n");
-    scanf("%d",&n);
+    printf("Enter the number of integers: ");
+    scanf("%d", &n);
     return n;
 }
-void array_input(int n,int a[n])
+
+void input_integers(int n, int numbers[])
 {
-    int i;
-    printf("Enter the intergers\n");
-    for(i=0;i<n;i++)
-        scanf("%d",&a[i]);
+    printf("Enter the intergers: ");
+    for(int i = 0; i < n; i++)
+        scanf("%d", &numbers[i]);
 }
-int process(int n,int a[n])
+
+int add(int n, int numbers[])
 {
-    int i,sum=0;
-    for(i=0;i<n;i++)
-        sum+=a[i];
+    int sum = 0;
+    for(int i = 0; i < n; ++i)
+        sum += numbers[i];
     return sum;
 }
-void output(int n,int a[n],int sum)
+
+void print_sum(int n , int numbers[n], int sum)
 {
-    int i;
-    printf("The sum of ");
-    for(i=0;i<n-1;i++)
-        printf("%d+",a[i]);
-    printf("%d=%d\n",a[i],sum);
+    for(int i = 0; i < n-1; ++i)
+        printf("%d + ", numbers[i]);
+    printf("%d = %d", numbers[n-1], sum);
 }
+
 int main()
 {
-    int n,sum;
-    n=input();
-    int a[n];
-    array_input(n,a);
-    sum=process(n,a);
-    output(n,a,sum);
+    int n = input_no_of_integers();
+    int numbers[n];
+    input_integers(n, numbers);
+    int sum = add(n, numbers);
+    print_sum(n, numbers, sum);
     return 0;
 }
