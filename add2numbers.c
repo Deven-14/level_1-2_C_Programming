@@ -1,26 +1,29 @@
 #include<stdio.h>
-int input()
+
+int input_ith_num(int i)
 {
-    int a;
-    printf("Enter a number:\n");
-    scanf("%d",&a);
-    return a;
+    int num;
+    printf("Enter number %d to be added: ", i);
+    scanf("%d", &num);
+    return num;
 }
-int process(int a, int b)
+
+int add(int num1, int num2)
 {
-    int sum=a+b;
-    return sum;
+    return num1 + num2;
 }
-void output(int a,int b,int sum)
+
+void print_sum(int num1,int num2,int sum)
 {
-    printf("The sum of %d + %d = %d\n",a,b,sum);
+    printf("%d + %d = %d\n", num1, num2, sum);
 }
+
 int main()
 {
-    int a,b,sum;
-    a=input();
-    b=input();
-    sum=process(a,b);
-    output(a,b,sum);
+    int num1, num2, sum;
+    num1 = input_ith_num(1);
+    num2 = input_ith_num(2);
+    sum = add(num1, num2);
+    print_sum(num1, num2, sum);
     return 0;
 }
