@@ -242,16 +242,24 @@ bool areColsNonViable(int matrix[3][3][3][3], bool isNonViable[9])
 }
 
 
+bool isSudokuViable(Sudoku *s)
+{
+    bool subMatricesNonViability = areSubMatricesNonViable(s->matrix, s->nonViableResult.subMatrices);
+    bool rowsNonViability = areRowsNonViable(s->matrix, s->nonViableResult.rows);
+    bool colsNonViablitilty = areColsNonViable(s->matrix, s->nonViableResult.cols);
+
+    return (subMatricesNonViability == false && rowsNonViability == false && colsNonViablitilty == false);
+}
+
+
 void verifySudoku(Sudoku *s)
 {
     
     bool isIncomplete = hasEmptyCells(s->matrix);
 
-    bool subMatricesNonViability = areSubMatricesNonViable(s->matrix, s->nonViableResult.subMatrices);
-    bool rowsNonViability = areRowsNonViable(s->matrix, s->nonViableResult.rows);
-    bool colsNonViablitilty = areColsNonViable(s->matrix, s->nonViableResult.cols);
+    bool isViable = isSudokuViable(s);
 
-    if(subMatricesNonViability == true || rowsNonViability == true || colsNonViablitilty == true) {
+    if(isViable == false) {
         s->result = NON_VIABLE;
     } else if(isIncomplete == true) {
         s->result = INCOMPLETE_BUT_VIABLE;
