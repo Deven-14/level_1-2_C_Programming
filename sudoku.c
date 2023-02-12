@@ -42,9 +42,9 @@ void inputSudokuMatrix(int matrix[3][3][3][3])
 
     for(int i = 0; i < 3; ++i)
     {
-        for(int j = 0; j < 3; ++j)
+        for(int k = 0; k < 3; ++k)
         {
-            for(int k = 0; k < 3; ++k)
+            for(int j = 0; j < 3; ++j)
             {
                 for(int l = 0; l < 3; ++l)
                 {
@@ -119,7 +119,7 @@ bool areSubMatricesNonViable(int matrix[3][3][3][3], bool isNonViable[9])
         {
             bool isViable = isSubMartixViable(matrix[i][j]);
             isNonViable[(3 * i) + (j + 1)] = !isViable;
-            printf("%d ", !isViable);
+            printf("%d,%d ", !isViable, (3*i)+(j+1));
             if(isViable == false) {
                 areNonViable = true;
             }
@@ -209,7 +209,6 @@ bool isColViable(int matrix[3][3][3][3], int col)
         for(int k = 0; k < 3; ++k)
         {
             int digit = matrix[i][j][k][l];
-            printf("%d ", digit);
             if(digit == 0) {
                 continue;
             }
@@ -220,7 +219,6 @@ bool isColViable(int matrix[3][3][3][3], int col)
 
             digitsPresent[digit] = true;
         }
-        printf("\n");
     }
 
     return true;
