@@ -290,10 +290,6 @@ void printSudokuOutput(Sudoku s)
         printf("\tsub-matrices:");
         printNonViableValues(s.nonViableResult.subMatrices);
 
-        for(int i = 0; i < 9; ++i) {
-            printf("%d ", s.nonViableResult.subMatrices[i]);
-        }
-
     }
 
 }
