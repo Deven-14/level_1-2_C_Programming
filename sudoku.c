@@ -119,7 +119,6 @@ bool areSubMatricesNonViable(int matrix[3][3][3][3], bool isNonViable[9])
         {
             bool isViable = isSubMartixViable(matrix[i][j]);
             isNonViable[(3 * i) + (j + 1)] = !isViable;
-            printf("%d,%d ", !isViable, (3*i)+(j+1));
             if(isViable == false) {
                 areNonViable = true;
             }
@@ -288,7 +287,8 @@ void printSudokuOutput(Sudoku s)
         printNonViableValues(s.nonViableResult.rows);
         printf("\tcols:");
         printNonViableValues(s.nonViableResult.cols);
-        printf("\tsub-matrices:", s.nonViableResult.subMatrices);
+        printf("\tsub-matrices:");
+        printNonViableValues(s.nonViableResult.subMatrices);
 
     }
 
