@@ -284,20 +284,29 @@ void printNonViableValues(bool isNonViable[9])
 void printSudokuOutput(Sudoku s)
 {
 
-    if(s.result == COMPLETE) {
-        printf("complete\n");
-    } else if(s.result == INCOMPLETE_BUT_VIABLE) {
-        printf("incomplete but viable\n");
-    } else {
+    switch(s.result)
+    {
+        case COMPLETE:
+            printf("complete\n");
+            break;
         
-        printf("non-viable\n");
-        printf("\trows:");
-        printNonViableValues(s.nonViableResult.rows);
-        printf("\tcols:");
-        printNonViableValues(s.nonViableResult.cols);
-        printf("\tsub-matrices:");
-        printNonViableValues(s.nonViableResult.subMatrices);
+        case INCOMPLETE_BUT_VIABLE:
+            printf("incomplete but viable\n");
+            break;
+        
+        case NON_VIABLE:
 
+            printf("non-viable\n");
+            printf("\trows:");
+            printNonViableValues(s.nonViableResult.rows);
+            printf("\tcols:");
+            printNonViableValues(s.nonViableResult.cols);
+            printf("\tsub-matrices:");
+            printNonViableValues(s.nonViableResult.subMatrices);
+            break;
+
+        default:
+            printf("something went wrong\n");
     }
 
 }
