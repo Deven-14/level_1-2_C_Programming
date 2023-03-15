@@ -1,9 +1,9 @@
 #include<stdio.h>
 
-int input_ith_num(int i)
+int input_num(char* ordinal_num)
 {
     int num;
-    printf("Enter number %d to be added: ", i);
+    printf("Enter %s number to be added: ", ordinal_num);
     scanf("%d", &num);
     return num;
 }
@@ -21,8 +21,8 @@ void print_sum(int num1,int num2,int sum)
 int main()
 {
     int num1, num2, sum;
-    num1 = input_ith_num(1);
-    num2 = input_ith_num(2);
+    num1 = input_num("1st");
+    num2 = input_num("2nd");
     sum = add(num1, num2);
     print_sum(num1, num2, sum);
     return 0;
