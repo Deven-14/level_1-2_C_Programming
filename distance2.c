@@ -1,18 +1,18 @@
 #include<stdio.h>
 #include<math.h>
 
-float input_x_coordinate_of_ith_point(int i)
+float input_x_coordinate_of_point(char* ordinal_num)
 {
     float x;
-    printf("Enter the x-coordinates of a point %d: ", i);
+    printf("Enter the x-coordinates of a %s point: ", ordinal_num);
     scanf("%f", &x);
     return x;
 }
 
-float input_y_coordinate_of_ith_point(int i)
+float input_y_coordinate_of_point(char* ordinal_num)
 {
     float y;
-    printf("Enter the y-coordinates of a point %d: ", i);
+    printf("Enter the y-coordinates of a %s point: ", ordinal_num);
     scanf("%f", &y);
     return y;
 }
@@ -32,10 +32,10 @@ void print_distance(float x1, float y1, float x2, float y2, float distance)
 int main()
 {
     float x1, x2, y1, y2, distance;
-    x1 = input_x_coordinate_of_ith_point(1);
-    y1 = input_y_coordinate_of_ith_point(1);
-    x2 = input_x_coordinate_of_ith_point(2);
-    y2 = input_y_coordinate_of_ith_point(2);
+    x1 = input_x_coordinate_of_point("1st");
+    y1 = input_y_coordinate_of_point("1st");
+    x2 = input_x_coordinate_of_point("2nd");
+    y2 = input_y_coordinate_of_point("2nd");
 
     distance = calculate_distance(x1, y1, x2, y2);
 
