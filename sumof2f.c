@@ -7,10 +7,10 @@ struct fraction
 };
 typedef struct fraction Fraction;
 
-Fraction input_ith_fraction(int i)
+Fraction input_fraction(char* ordinal_num)
 {
     Fraction f;
-    printf("Enter fraction %d (n / d): ", i);
+    printf("Enter %s fraction (n / d): ", ordinal_num);
     scanf("%d %d", &f.n, &f.d);
     return f;
 }
@@ -52,8 +52,8 @@ void print_sum(Fraction f1, Fraction f2, Fraction f_sum)
 int main()
 {
     Fraction f1, f2, f_sum;
-    f1 = input_ith_fraction(1);
-    f2 = input_ith_fraction(2);
+    f1 = input_fraction("1st");
+    f2 = input_fraction("2nd");
     f_sum = sum_of_2_fractions(f1, f2);
     print_sum(f1, f2, f_sum);
     return 0;
