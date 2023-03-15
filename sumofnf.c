@@ -15,19 +15,21 @@ int input_no_of_fractions()
 	return n;
 }
 
-Fraction input_ith_fraction(int i)
+Fraction input_fraction(int i, char* ordinal_suffix)
 {
     Fraction f;
-    printf("Enter fraction %d (n / d): ", i);
+    printf("Enter %d%s fraction (n / d): ", i, ordinal_suffix);
     scanf("%d %d", &f.n, &f.d);
     return f;
 }
 
-void input_n_fractions(int n, Fraction f[n])
+void input_fractions(int n, Fraction f[n])
 {
-	printf("Enter the fractions:\n\n");
-	for(int i = 0; i < n; ++i)
-		f[i] = input_ith_fraction(i+1);
+	char *ordinal_suffixes[] = {"st", "nd", "rd", "th"};
+	printf("\nEnter the fractions:\n");
+	for(int i = 0; i < n; ++i) {
+		f[i] = input_fraction(i+1, ordinal_suffixes[(i % 10) > 3 ? 3 : i]);
+	}
 }
 
 int gcd(int a, int b)
@@ -50,7 +52,7 @@ Fraction reduce(Fraction f)
     return f;
 }
 
-Fraction sum_of_n_fractions(int n, Fraction f[])
+Fraction sum_of_fractions(int n, Fraction f[])
 {
 	Fraction f_sum = {f[0].n, f[0].d};
 
@@ -66,6 +68,7 @@ Fraction sum_of_n_fractions(int n, Fraction f[])
 
 void print_sum(int n, Fraction f[], Fraction f_sum)
 {
+	printf("\n");
 	for(int i = 0; i < n-1; ++i)
 		printf("%d/%d + ", f[i].n, f[i].d);
 	printf("%d/%d = %d/%d\n", f[n-1].n, f[n-1].d, f_sum.n, f_sum.d);
@@ -75,8 +78,8 @@ int main()
 {
 	int n = input_no_of_fractions();
 	Fraction f[n], f_sum;
-	input_n_fractions(n, f);
-	f_sum = sum_of_n_fractions(n, f);
+	input_fractions(n, f);
+	f_sum = sum_of_fractions(n, f);
 	print_sum(n, f, f_sum);
 	return 0;
 }
