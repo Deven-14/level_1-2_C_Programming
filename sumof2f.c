@@ -35,7 +35,7 @@ Fraction reduce(Fraction f)
     return f;
 }
 
-Fraction sum_of_2_fractions(Fraction f1, Fraction f2)
+Fraction sum_of_fractions(Fraction f1, Fraction f2)
 {
     Fraction f_sum;
     f_sum.n = f1.n * f2.d + f2.n * f1.d;
@@ -54,7 +54,7 @@ int main()
     Fraction f1, f2, f_sum;
     f1 = input_fraction("1st");
     f2 = input_fraction("2nd");
-    f_sum = sum_of_2_fractions(f1, f2);
+    f_sum = sum_of_fractions(f1, f2);
     print_sum(f1, f2, f_sum);
     return 0;
 }
