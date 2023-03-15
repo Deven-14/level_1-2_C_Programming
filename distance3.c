@@ -8,10 +8,10 @@ struct point
 };
 typedef struct point Point;
 
-Point input_ith_point(int i)
+Point input_point(char* ordinal_num)
 {
     Point p;
-    printf("Enter the coordinates of point %d (x, y): ", i);
+    printf("Enter the coordinates of %s point (x, y): ", ordinal_num);
     scanf("%f %f", &p.x, &p.y);
     return p;
 }
@@ -32,8 +32,8 @@ int main()
 {    
     Point p1, p2;
     float distance;
-    p1 = input_ith_point(1);
-    p2 = input_ith_point(2);
+    p1 = input_point("1st");
+    p2 = input_point("2nd");
     distance = calculate_distance(p1, p2);
     print_distance(p1, p2, distance);
     return 0;
